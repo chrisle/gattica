@@ -11,7 +11,7 @@ module Gattica
 
     SCRIPT_NAME = '/accounts/ClientLogin'
     HEADERS = { 'Content-Type' => 'application/x-www-form-urlencoded', 'User-Agent' => 'Ruby Net::HTTP' }   # Google asks that you be nice and provide a user-agent string
-    OPTIONS = { :source => 'gattica-'+VERSION, :service => 'analytics' }                                    # Google asks that you provide the name of your app as a 'source' parameter in your POST
+    OPTIONS = { :source => 'gattica-'+Gattica::VERSION, :service => 'analytics' }                                    # Google asks that you provide the name of your app as a 'source' parameter in your POST
 
     attr_reader :tokens
   
