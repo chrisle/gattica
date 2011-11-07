@@ -1,3 +1,11 @@
+This Fork
+=======
+Deviantech's fork of the Gattica gem has the following modifications:
+
+* Authentication by token actually works
+
+-------
+
 Gattica
 =======
 Gattica is an easy to use Gem for getting data from the Google Analytics API.  

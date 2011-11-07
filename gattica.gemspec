@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
-    ".rvmrc",
     "Gemfile",
     "LICENSE",
     "README.md",

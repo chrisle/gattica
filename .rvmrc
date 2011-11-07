@@ -1,5 +1,0 @@
-if [[ -s "~/.rvm/environments/ruby-1.9.2-p180@gattica" ]] ; then
-  . "~/.rvm/environments/ruby-1.9.2-pl180@gattica"
-else
-  rvm --create use "1.9.2@gattica"
-fi

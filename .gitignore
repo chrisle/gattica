@@ -3,3 +3,4 @@ github-test.rb
 examples/active_example.rb
 examples/.DS_Store
 .idea
+.rvmrc

@@ -251,7 +251,7 @@ module Gattica
       @http = Net::HTTP.new(Settings::SERVER, port)
       @http.use_ssl = Settings::USE_SSL
       @http.set_debug_output $stdout if @options[:debug]
-      @http.read_timeout = @options[:timeout] if defined? @options[:timeout]
+      @http.read_timeout = @options[:timeout] if @options[:timeout]
     end
 
     # Sets instance variables from options given during initialization and
@@ -268,12 +268,12 @@ module Gattica
     # If the authorization is a email and password then create User objects
     # or if it's a previous token, use that.  Else, raise exception.
     def check_init_auth_requirements
-      if ((defined? @options[:email]) && (defined? @options[:password]))
+      if @options[:token].to_s.length > 200 # Not sure actual required length, but mine's 267
+        self.token = @options[:token]
+      elsif @options[:email] && @options[:password]
         @user = User.new(@options[:email], @options[:password])
         @auth = Auth.new(@http, user)
         self.token = @auth.tokens[:auth]
-      elsif (defined? @options[:token])
-        self.token = @options[:token]
       else
         raise GatticaError::NoLoginOrToken, 'An email and password or an authentication token is required to initialize Gattica.'
       end
