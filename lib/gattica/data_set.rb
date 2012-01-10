@@ -21,7 +21,7 @@ module Gattica
     #
     # == Parameters:
     # +format=:long+::    Adds id, updated, title to output columns
-    def to_csv(format=:long)
+    def to_csv(format=:short)
       output = ''
       columns = []
       case format
@@ -29,13 +29,14 @@ module Gattica
           ["id", "updated", "title"].each { |c| columns << c }
       end
       unless @points.empty?   # if there was at least one result
-        @points.first.dimensions.map {|d| d.key}.each { |c| columns << c }
-        @points.first.metrics.map {|m| m.key}.each { |c| columns << c }
+        @points.first.dimensions.map {|d| d.keys.first}.each { |c| columns << c }
+        @points.first.metrics.map {|m| m.keys.first}.each { |c| columns << c }
       end
-      output = CSV.generate_line(columns) + "\n"
+      output = CSV.generate_line(columns) 
       @points.each do |point|
-        output += point.to_csv(format) + "\n"
+        output += point.to_csv(format)
       end
+       output
     end
 
     def to_yaml
