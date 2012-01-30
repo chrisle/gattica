@@ -20,7 +20,8 @@ module Gattica
       options = OPTIONS.merge(user.to_h)
       options.extend HashExtensions
       
-      response, data = http.post(SCRIPT_NAME, options.to_query, HEADERS)
+      response = http.post(SCRIPT_NAME, options.to_query, HEADERS)
+      data = response.body ||= ''
       if response.code != '200'
         case response.code
         when '403'
