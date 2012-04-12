@@ -156,7 +156,7 @@ module Gattica
     # sure it's valid and not an error
 
     def do_http_get(query_string)
-      response, data = @http.get(query_string, @headers)
+      response = @http.get(query_string, @headers)
 
       # error checking
       if response.code != '200'
@@ -170,7 +170,7 @@ module Gattica
         end
       end
 
-      return data
+      return response.body
     end
 
 
