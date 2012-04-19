@@ -48,6 +48,10 @@ module Gattica
         'points' => @points }.to_yaml
     end
 
+    def to_hash
+      @points.map(&:to_hash)
+    end
+
   end
   
 end
