@@ -20,7 +20,7 @@ module Gattica
         { dimension.attributes['name'].split(':').last.to_sym => dimension.attributes['value'].split(':').last }
       end
       @metrics = xml.search('dxp:metric').collect do |metric|
-        { metric.attributes['name'].split(':').last.to_sym => metric.attributes['value'].split(':').last.to_i }
+        { metric.attributes['name'].split(':').last.to_sym => metric.attributes['value'].split(':').last.to_f }
       end
     end
     
