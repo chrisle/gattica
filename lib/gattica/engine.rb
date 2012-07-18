@@ -16,6 +16,7 @@ module Gattica
     # +:profile_id+::   Use this Google Analytics profile_id (default is nil)
     # +:timeout+::      Set Net:HTTP timeout in seconds (default is 300)
     # +:token+::        Use an authentication token you received before
+    # +:verify_ssl+::   Verify SSL connection (default is true)
     def initialize(options={})
       @options = Settings::DEFAULT_OPTIONS.merge(options)
       handle_init_options(@options)
@@ -262,6 +263,7 @@ module Gattica
       port = Settings::USE_SSL ? Settings::SSL_PORT : Settings::NON_SSL_PORT
       @http = Net::HTTP.new(server, port)
       @http.use_ssl = Settings::USE_SSL
+      @http.verify_mode = @options[:verify_ssl] ? Settings::VERIFY_SSL_MODE : Settings::NO_VERIFY_SSL_MODE
       @http.set_debug_output $stdout if @options[:debug]
       @http.read_timeout = @options[:timeout] if @options[:timeout]
     end
