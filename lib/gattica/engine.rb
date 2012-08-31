@@ -87,6 +87,7 @@ module Gattica
 
     def segments
       if @user_segments.nil?
+        create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v2.4/management/segments?max-results=10000")
         xml = Hpricot(response)
         @user_segments = xml.search("dxp:segment").collect { |s| 
