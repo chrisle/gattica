@@ -287,7 +287,7 @@ Learn more about filters: [Google Data feed filtering reference](http://code.goo
       :end_date     => '2011-02-01', 
       :dimensions   => ['month', 'year'],
       :metrics      => ['visits', 'bounces'],
-      :segment      => ['gaid::-11']
+      :segment      => 'gaid::-11'
     })
 
 ### Filtering
