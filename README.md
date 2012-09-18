@@ -119,8 +119,8 @@ Here are some additional examples that illustrate different things you can do wi
         :start_date   => '2011-01-01',
         :end_date     => '2011-04-01',
         :dimensions   => ['month', 'year'],
-        :metrics      => ['visits']
-        :sort         => ['-visits'],
+        :metrics      => ['visits'],
+        :sort         => ['-visits']
     })
 
 ### Limiting results
@@ -130,7 +130,7 @@ Here are some additional examples that illustrate different things you can do wi
         :start_date   => '2011-01-01',
         :end_date     => '2011-04-01',
         :dimensions   => ['month', 'year'],
-        :metrics      => ['visits']
+        :metrics      => ['visits'],
         :max_results  => 25 
     })
 
@@ -184,7 +184,7 @@ Here are some additional examples that illustrate different things you can do wi
     
     # => "month,year,visitors\n\n01,2011, ...."
 
-    # Long  CSV will get you a few additional columns:
+    # Long CSV will get you a few additional columns:
     long_csv = data.to_csv            
     
     # => "id,updated,title,month,year,visitors\n\nhttp:// ..."
