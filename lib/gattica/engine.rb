@@ -50,8 +50,8 @@ module Gattica
         # get profiles
         response = do_http_get("/analytics/v2.4/management/accounts/~all/webproperties/~all/profiles?max-results=10000")
         xml = Hpricot(response)
-        @user_accounts = xml.search(:entry).collect { |profile_xml| 
-          Account.new(profile_xml) 
+        @user_accounts = xml.search(:entry).collect { |profile_xml|
+          Account.new(profile_xml)
         }
 
         # Fill in the goals
@@ -91,8 +91,8 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v2.4/management/segments?max-results=10000")
         xml = Hpricot(response)
-        @user_segments = xml.search("dxp:segment").collect { |s| 
-          Segment.new(s) 
+        @user_segments = xml.search("dxp:segment").collect { |s|
+          Segment.new(s)
         }
       end
       return @user_segments
@@ -154,9 +154,9 @@ module Gattica
 
     ######################################################################
     private
-    
+
     # Add the Google API key to the query string, if one is specified in the options.
-    
+
     def add_api_key(query_string)
       query_string += "&key=#{@options[:api_key]}" if @options[:api_key]
       query_string
@@ -225,7 +225,7 @@ module Gattica
         output += '&filters=' + args[:filters].collect do |filter|
           match, name, operator, expression = *filter.match(/^(\w*)\s*([=!<>~@]*)\s*(.*)$/)           # splat the resulting Match object to pull out the parts automatically
           unless name.empty? || operator.empty? || expression.empty?                      # make sure they all contain something
-            "ga:#{name}#{CGI::escape(operator.gsub(/ /,''))}#{CGI::escape(expression)}"   # remove any whitespace from the operator before output
+            "ga:#{name}#{CGI::escape(operator.gsub(/ /,''))}#{CGI::escape(expression.gsub(',', '\,'))}"   # remove any whitespace from the operator before output and escape commas in expression (commas in the experession generate a GA error... they are used for OR conditions)
           else
             raise GatticaError::InvalidFilter, "The filter '#{filter}' is invalid. Filters should look like 'browser == Firefox' or 'browser==Firefox'"
           end
