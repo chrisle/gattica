@@ -27,12 +27,13 @@ module Gattica
         :debug => false,
         :headers => {},
         :logger => Logger.new(STDOUT),
-        :verify_ssl => true
+        :verify_ssl => true,
+        :ssl_ca_path => nil,
+        :proxy=> nil         #eg: proxy=>{:host => '127.0.0.1', :port=>3128}
     }
 
     FILTER_METRIC_OPERATORS = %w{ == != > < >= <= }
     FILTER_DIMENSION_OPERATORS = %w{ == != =~ !~ =@ ~@ }
-    
 
   end
 end
