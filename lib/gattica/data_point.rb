@@ -26,7 +26,7 @@ module Gattica
     
     
     # Outputs in Comma Seperated Values format
-    def to_csv(format = :short)
+    def to_csv(format = :short, precision=nil)
       output = ''
       columns = []
       
@@ -41,10 +41,10 @@ module Gattica
 
       @dimensions.map {|d| d.values.first}.each { |c| columns << c }
       # output all metrics
-      @metrics.map {|m| m.values.first}.each { |c| columns << c }
+      @metrics.map {|m| m.values.first}.each { |c| columns << (precision.nil? ? c : (precision % c)) }
 
-      output = CSV.generate_line(columns)      
-     
+      output = CSV.generate_line(columns)
+
     end
     
     
