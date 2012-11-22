@@ -50,8 +50,8 @@ module Gattica
         # get profiles
         response = do_http_get("/analytics/v2.4/management/accounts/~all/webproperties/~all/profiles?max-results=10000")
         xml = Hpricot(response)
-        @user_accounts = xml.search(:entry).collect { |profile_xml| 
-          Account.new(profile_xml) 
+        @user_accounts = xml.search(:entry).collect { |profile_xml|
+          Account.new(profile_xml)
         }
 
         # Fill in the goals
@@ -91,8 +91,8 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v2.4/management/segments?max-results=10000")
         xml = Hpricot(response)
-        @user_segments = xml.search("dxp:segment").collect { |s| 
-          Segment.new(s) 
+        @user_segments = xml.search("dxp:segment").collect { |s|
+          Segment.new(s)
         }
       end
       return @user_segments
@@ -154,9 +154,9 @@ module Gattica
 
     ######################################################################
     private
-    
+
     # Add the Google API key to the query string, if one is specified in the options.
-    
+
     def add_api_key(query_string)
       query_string += "&key=#{@options[:api_key]}" if @options[:api_key]
       query_string
@@ -252,16 +252,6 @@ module Gattica
         end
         unless missing.empty?
           raise GatticaError::InvalidSort, "You are trying to sort by fields that are not in the available dimensions or metrics: #{missing.join(', ')}"
-        end
-      end
-
-      # make sure that the user is only trying to filter fields that are in dimensions or metrics
-      if args[:filters]
-        missing = args[:filters].find_all do |arg|
-          !possible.include? arg.match(/^\w*/).to_s    # get the name of the filter and compare
-        end
-        unless missing.empty?
-          raise GatticaError::InvalidSort, "You are trying to filter by fields that are not in the available dimensions or metrics: #{missing.join(', ')}"
         end
       end
 
