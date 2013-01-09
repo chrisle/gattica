@@ -1,32 +1,20 @@
 PATH
   remote: .
   specs:
-<<<<<<< HEAD
-    gattica (0.5.1)
-=======
-    gattica (0.6.0)
-      gattica
->>>>>>> upstream/master
+    gattica (0.6.2)
       hpricot
-      test-unit
 
 GEM
   remote: http://rubygems.org/
   specs:
     hpricot (0.8.6)
-<<<<<<< HEAD
-    rake (0.9.2.2)
-=======
->>>>>>> upstream/master
     test-unit (2.4.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-<<<<<<< HEAD
-  rake
-=======
+  bundler
   gattica!
->>>>>>> upstream/master
+  hpricot
   test-unit
