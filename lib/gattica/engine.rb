@@ -270,11 +270,20 @@ module Gattica
 
     def create_http_connection(server)
       port = Settings::USE_SSL ? Settings::SSL_PORT : Settings::NON_SSL_PORT
-      @http = Net::HTTP.new(server, port)
+      @http = @options[:http_proxy].any? ? http_proxy.new(server, port) : Net::HTTP.new(server, port)
       @http.use_ssl = Settings::USE_SSL
       @http.verify_mode = @options[:verify_ssl] ? Settings::VERIFY_SSL_MODE : Settings::NO_VERIFY_SSL_MODE
       @http.set_debug_output $stdout if @options[:debug]
       @http.read_timeout = @options[:timeout] if @options[:timeout]
+    end
+
+    def http_proxy
+      proxy_host = @options[:http_proxy][:host]
+      proxy_port = @options[:http_proxy][:port]
+      proxy_user = @options[:http_proxy][:user]
+      proxy_pass = @options[:http_proxy][:password]
+
+      Net::HTTP::Proxy(proxy_host, proxy_port, proxy_user, proxy_pass)
     end
 
     # Sets instance variables from options given during initialization and

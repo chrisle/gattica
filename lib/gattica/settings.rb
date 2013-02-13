@@ -27,7 +27,8 @@ module Gattica
         :debug => false,
         :headers => {},
         :logger => Logger.new(STDOUT),
-        :verify_ssl => true
+        :verify_ssl => true,
+        :http_proxy => {}
     }
 
     FILTER_METRIC_OPERATORS = %w{ == != > < >= <= }

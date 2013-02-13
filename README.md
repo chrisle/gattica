@@ -407,6 +407,17 @@ Google expects a special header in all HTTP requests called 'Authorization'.  Ga
         :headers => {'My-Special-Header':'my_custom_value'}
     })
         
+Using http proxy
+-----------------
+
+You can set http proxy settings when you instantiate the Gattica object:
+
+    ga = Gattica.new({ 
+        :email => 'email@gmail.com', 
+        :password => 'password',
+        :http_proxy => { :host => 'proxy.example.com', :port => 8080, :user => 'username', :password => 'password' }
+    })
+    
 <hr />
 
 History
