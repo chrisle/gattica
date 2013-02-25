@@ -139,9 +139,43 @@ module Gattica
       @logger.debug(query_string) if @debug
       create_http_connection('www.googleapis.com')
       data = do_http_get("/analytics/v2.4/data?#{query_string}")
-      return DataSet.new(Hpricot.XML(data))
+      return DataSet.new(Hpricot.XML(data), args, self)
     end
 
+    # Each page of results is passed to a block
+    #
+    # == Usage
+    #
+    #   ga.get_each({ get_options }).each do |page|
+    #     # process data...
+    #   end
+    #
+    # == Input
+    # See +get+
+
+    def get_each(args = { })
+      get(args).tap do |data_set|
+        yield data_set
+        while data_set.next_page?
+          data_set = data_set.next_page
+          yield data_set
+        end
+      end
+    end
+
+    # Get all pages of results at once
+    #
+    # == Input
+    # See +get+
+
+    def get_all(args = { })
+      points = []
+      get_each(args){ |set| points += set.points }.tap do |data_set|
+        data_set.start_index = 1
+        data_set.items_per_page = data_set.total_entries
+        data_set.points = points
+      end
+    end
 
     # Since google wants the token to appear in any HTTP call's header, we have to set that header
     # again any time @token is changed so we override the default writer (note that you need to set
