@@ -9,7 +9,7 @@ Features
 * Returns data as: hash, json, CSV
 
 [How to export Google Analytics data using Ruby](
-http://www.seerinteractive.com/blog/google-analytics-data-export-api-with-rubygattica/2011/02/22/) (Links to my blog post on [Seer Interactive](http://www.seerinteractive.com))
+http://www.seerinteractive.com/blog/google-analytics-data-export-api-with-rubygattica) (Links to my blog post on [Seer Interactive](http://www.seerinteractive.com))
 
 <hr />
 
