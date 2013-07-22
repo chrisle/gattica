@@ -225,7 +225,7 @@ module Gattica
         output += '&filters=' + args[:filters].collect do |filter|
           match, name, operator, expression = *filter.match(/^(\w*)\s*([=!<>~@]*)\s*(.*)$/)           # splat the resulting Match object to pull out the parts automatically
           unless name.empty? || operator.empty? || expression.empty?                      # make sure they all contain something
-            "ga:#{name}#{CGI::escape(operator.gsub(/ /,''))}#{CGI::escape(expression)}"   # remove any whitespace from the operator before output
+            "ga:#{name}#{CGI::escape(operator.gsub(/ /,''))}#{CGI::escape(expression.gsub(',', '\,'))}"   # remove any whitespace from the operator before output and escape commas in expression
           else
             raise GatticaError::InvalidFilter, "The filter '#{filter}' is invalid. Filters should look like 'browser == Firefox' or 'browser==Firefox'"
           end
