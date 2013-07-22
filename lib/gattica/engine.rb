@@ -18,6 +18,7 @@ module Gattica
     # +:token+::        Use an authentication token you received before
     # +:api_key+::      The Google API Key for your project
     # +:verify_ssl+::   Verify SSL connection (default is true)
+    # +:ssl_ca_path+::  PATH TO SSL CERTIFICATES to see this run on command line:(openssl version -a) ubuntu path eg:"/usr/lib/ssl/certs"
     def initialize(options={})
       @options = Settings::DEFAULT_OPTIONS.merge(options)
       handle_init_options(@options)
@@ -275,6 +276,9 @@ module Gattica
       @http.verify_mode = @options[:verify_ssl] ? Settings::VERIFY_SSL_MODE : Settings::NO_VERIFY_SSL_MODE
       @http.set_debug_output $stdout if @options[:debug]
       @http.read_timeout = @options[:timeout] if @options[:timeout]
+      if (@options[:ssl_ca_path] && File.directory?(@options[:ssl_ca_path]) && @http.use_ssl?)
+        @http.ca_path = @options[:ssl_ca_path]
+      end
     end
 
     def http_proxy
