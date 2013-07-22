@@ -8,6 +8,7 @@ require 'logger'
 require 'rubygems'
 require 'hpricot'
 require 'yaml'
+require 'openssl'
 
 require 'gattica/engine'
 require 'gattica/settings'

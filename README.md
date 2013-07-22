@@ -417,6 +417,17 @@ You can set http proxy settings when you instantiate the Gattica object:
         :password => 'password',
         :http_proxy => { :host => 'proxy.example.com', :port => 8080, :user => 'username', :password => 'password' }
     })
+
+Specifying SSL certificates directory
+-----------------
+
+You can set ssl certificates directory path when you instantiate the Gattica object:
+
+    ga = Gattica.new({ 
+        :email => 'email@gmail.com', 
+        :password => 'password',
+        :ssl_ca_path => '/usr/lib/ssl/certs'
+    })
     
 <hr />
 

@@ -28,6 +28,7 @@ module Gattica
         :headers => {},
         :logger => Logger.new(STDOUT),
         :verify_ssl => true,
+        :ssl_ca_path => nil,
         :http_proxy => {}
     }
 
