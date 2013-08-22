@@ -19,6 +19,15 @@ Here are bare basics to get you up and running.
 
 Installation
 ------------
+
+### Standalone app ###
+
+```ruby
+gem install "chrisle-gattica"
+```
+
+### Rake based app ###
+
 Add Gattica to your Gemfile
 
     gem 'gattica', :git => 'git://github.com/chrisle/gattica.git'
