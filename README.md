@@ -19,6 +19,15 @@ Here are bare basics to get you up and running.
 
 Installation
 ------------
+
+### Standalone app ###
+
+```ruby
+gem install "chrisle-gattica"
+```
+
+### Rake based app ###
+
 Add Gattica to your Gemfile
 
     gem 'gattica', :git => 'git://github.com/chrisle/gattica.git'
@@ -514,4 +523,3 @@ Maintainer history
   * [Rob Cameron](https://github.com/activenetwork/gattica) (2010)
   * [Mike Rumble](https://github.com/rumble/gattica) (2010)
   * [Chris Le](https://github.com/chrisle/gattica) (Current)
-  
