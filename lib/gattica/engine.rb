@@ -255,16 +255,6 @@ module Gattica
         end
       end
 
-      # make sure that the user is only trying to filter fields that are in dimensions or metrics
-      if args[:filters]
-        missing = args[:filters].find_all do |arg|
-          !possible.include? arg.match(/^\w*/).to_s    # get the name of the filter and compare
-        end
-        unless missing.empty?
-          raise GatticaError::InvalidSort, "You are trying to filter by fields that are not in the available dimensions or metrics: #{missing.join(', ')}"
-        end
-      end
-
       return args
     end
 
