@@ -30,7 +30,7 @@ module Gattica
         logger: Logger.new(STDOUT),
         verify_ssl: true,
         ssl_ca_path: nil,
-        proxy: nil,        # eg: proxy => { host: '127.0.0.1', port: 3128 }
+        proxy: nil,        # eg: proxy: { host: '127.0.0.1', port: 3128 }
         http_proxy: {}
     }
 

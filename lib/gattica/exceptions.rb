@@ -16,11 +16,13 @@ module GatticaError
   class TooManyMetrics < StandardError; end;
   class InvalidSort < StandardError; end;
   class InvalidFilter < StandardError; end;
+  class MissingFile < StandardError; end;
   class MissingStartDate < StandardError; end;
   class MissingEndDate < StandardError; end;
   class MissingAccountId < StandardError; end;
   class MissingWebPropertyId < StandardError; end;
   class MissingProfileId < StandardError; end;
+  class MissingCustomDataSourceId < StandardError; end;
 
   # Errors from Analytics
   class AnalyticsError < StandardError; end;
