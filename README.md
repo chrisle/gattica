@@ -1,15 +1,13 @@
 Gattica
 =======
-Gattica is an easy to use Gem for getting data from the Google Analytics API.  
+Gattica is an easy to use Gem for getting data from the Google Analytics API V3.  
 
 Features
 --------
 * Supports: metrics, dimensions, sorting, filters, goals, and segments.
+* Get acces to the Management API, Reporting API, MCF Reporting API and the Metadata API.
 * Handles accounts with over 1000 profiles
 * Returns data as: hash, json, CSV
-
-[How to export Google Analytics data using Ruby](
-http://www.seerinteractive.com/blog/google-analytics-data-export-api-with-rubygattica/2011/02/22/) (Links to my blog post on [Seer Interactive](http://www.seerinteractive.com))
 
 <hr />
 
@@ -21,21 +19,24 @@ Installation
 ------------
 Add Gattica to your Gemfile
 
-    gem 'gattica', :git => 'git://github.com/chrisle/gattica.git'
+    gem 'gattica', git: 'git://github.com/MartijnSch/gattica.git'
 
 Don't forget to bundle install:
 
     $ bundle install
 
+If you want to get a refresh token to use for offline access, run:
+
+    $ bundle exec gattica_get_access_token
+
 Login, get a list of accounts, pick an account, and get data:
 
     # Include the gem
     require 'gattica'
-    
-    # Login
+
+    # Login using your OAUHT2 Token
     ga = Gattica.new({ 
-        :email => 'email@gmail.com', 
-        :password => 'password'
+        token: 'oauth2_token'
     })
 
     # Get a list of accounts
@@ -46,10 +47,10 @@ Login, get a list of accounts, pick an account, and get data:
 
     # Get the data
     data = ga.get({ 
-        :start_date   => '2011-01-01',
-        :end_date     => '2011-04-01',
-        :dimensions   => ['month', 'year'],
-        :metrics      => ['visits', 'bounces'],
+        start_date:   '2011-01-01',
+        end_date:     '2011-04-01',
+        dimensions:   ['month', 'year'],
+        metrics:      ['visits', 'bounces'],
     })
 
     # Show the data
@@ -61,10 +62,8 @@ General Usage
 =============
 
 ### Create your Gattica object
+    ga = Gattica.new({ token: 'oauth2_token' })
 
-    ga = Gattica.new({ :email => 'email@gmail.com', :password => 'password' })
-    puts ga.token   # => returns a big alpha-numeric string
-    
 ### Query for accounts you have access to
 
     # Retrieve a list of accounts
@@ -98,10 +97,10 @@ Here's an example:
 
     # Get the number of visitors by month from Jan 1st to April 1st.
     data = ga.get({ 
-        :start_date   => '2011-01-01',
-        :end_date     => '2011-04-01',
-        :dimensions   => ['month', 'year'],
-        :metrics      => ['visitors']
+        start_date:   '2011-01-01',
+        end_date:     '2011-04-01',
+        dimensions:   ['month', 'year'],
+        metrics:      ['visitors']
     })
 
 <hr />
@@ -116,44 +115,23 @@ Here are some additional examples that illustrate different things you can do wi
 
     # Sorting by number of visits in descending order (most visits at the top)
     data = ga.get({ 
-        :start_date   => '2011-01-01',
-        :end_date     => '2011-04-01',
-        :dimensions   => ['month', 'year'],
-        :metrics      => ['visits'],
-        :sort         => ['-visits']
+        start_date:   '2011-01-01',
+        end_date:     '2011-04-01',
+        dimensions:   ['month', 'year'],
+        metrics:      ['visits'],
+        sort:         ['-visits']
     })
 
 ### Limiting results
 
     # Limit the number of results to 25.
     data = ga.get({ 
-        :start_date   => '2011-01-01',
-        :end_date     => '2011-04-01',
-        :dimensions   => ['month', 'year'],
-        :metrics      => ['visits'],
-        :max_results  => 25 
+        start_date:   '2011-01-01',
+        end_date:     '2011-04-01',
+        dimensions:   ['month', 'year'],
+        metrics:      ['visits'],
+        max_results:  25 
     })
-
-### Results as a Hash
-
-    my_hash = data.to_h['points']
-
-    # => 
-    #   [{
-    #     "xml"         => "<entry gd:etag=\"W/&quot;....  </entry>", 
-    #     "id"          => "http://www.google.com/analytics/feeds/data?...", 
-    #     "updated"     => Thu, 31 Mar 2011 17:00:00 -0700, 
-    #     "title"       => "ga:month=01 | ga:year=2011", 
-    #     "dimensions"  => [{:month=>"01"}, {:year=>"2011"}], 
-    #     "metrics"     => [{:visitors=>6}]
-    #   },
-    #   {
-    #     "xml"         => ...
-    #     "id"          => ...
-    #     "updated"     => ...
-    #     ...
-    #   }]
-
 
 ### JSON formatted string
 
@@ -194,17 +172,14 @@ Here are some additional examples that illustrate different things you can do wi
 
     # You can work directly with the 'point' method to return data.
     data.points.each do |data_point|
-      month = data_point.dimensions.detect { |dim| dim.key == :month }.value
-      year = data_point.dimensions.detect { |dim| dim.key == :year }.value
-      visitors = data_point.metrics.detect { |metric| metric.key == :visitors }.value
-      puts "#{month}/#{year} got #{visitors} visitors"
+      puts "#{data_point[:keyword]} got #{visitors} visitors"
     end
 
     # => 
-    #   01/2011 got 34552 visitors
-    #   02/2011 got 36732 visitors
-    #   03/2011 got 45642 visitors
-    #   04/2011 got 44456 visitors
+    #   keyword 1 got 34552 visitors
+    #   keyword 2 got 36732 visitors
+    #   keyword 3 got 45642 visitors
+    #   keyword 4 got 44456 visitors
 
 <hr />
 
@@ -221,15 +196,19 @@ Learn more about filters: [Google Data feed filtering reference](http://code.goo
 
     # => 
     #   [{
-    #     "id"                => "http://www.google.com/analytics/feeds/accounts/ga:...",
-    #     "updated"           => Mon, 16 May 2011 16:40:30 -0700, 
-    #     "title"             => "Profile Title", 
-    #     "table_id"          => "ga:123456", 
-    #     "account_id"        => 123456, 
-    #     "account_name"      => "Account name", 
-    #     "profile_id"        =>  123456, 
-    #     "web_property_id"   => "UA-123456-3", 
-    #     "goals"=>[{
+    #     :id                => "http://www.google.com/analytics/feeds/accounts/ga:...",
+    #     :updated           => Mon, 16 May 2011 16:40:30 -0700,
+    #     :title             => "Profile Title",
+    #     :table_id          => "ga:123456",
+    #     :account_id        => 123456,
+    #     :account_name      => "Account name",
+    #     :profile_id        =>  123456,
+    #     :web_property_id   => "UA-123456-3",
+    #     :currency          => "EUR",
+    #     :timezone          => "",
+    #     :ecommerce         => true,
+    #     :site_search       => true,
+    #     :goals =>[{
     #         :active   => "true", 
     #         :name     => "Goal name", 
     #         :number   => 1, 
@@ -237,9 +216,9 @@ Learn more about filters: [Google Data feed filtering reference](http://code.goo
     #     }]
     #   }, 
     #   {
-    #     "id"                => "http://www.google.com/analytics/feeds/accounts/ga:...",
-    #     "updated"           => Mon, 16 May 2011 16:40:30 -0700, 
-    #     "title"             => "Profile Title", 
+    #     :id                => "http://www.google.com/analytics/feeds/accounts/ga:...",
+    #     :updated           => Mon, 16 May 2011 16:40:30 -0700, 
+    #     :title             => "Profile Title", 
     #     ...
     #   }]
 
@@ -248,33 +227,38 @@ Learn more about filters: [Google Data feed filtering reference](http://code.goo
     # Get all the segments that are available to you
     segments = ga.segments
 
-    # Segments with negative gaid are default segments from Google. Segments
-    # with positive gaid numbers are custom segments that you created.
+    # Segments with negative gaid are default segments from Google.
+    # Segments with positive gaid numbers are custom segments that you created.
     # =>
     #   [{
-    #     "id"          => "gaid::-1", 
-    #     "name"        => "All Visits", 
-    #     "definition"  => " "
+    #     :id          => "gaid::-1", 
+    #     :name        => "All Visits", 
+    #     :definition  => " ",
+    #     :updated     => "2013-11-28 20:30:40"
     #   }, 
     #   {
-    #     "id"          => "gaid::-2", 
-    #     "name"        => "New Visitors", 
-    #     "definition"  => "ga:visitorType==New Visitor"
+    #     :id          => "gaid::-2", 
+    #     :name        => "New Visitors", 
+    #     :definition  => "ga:visitorType==New Visitor",
+    #     :updated     => "2013-11-28 20:30:40"
     #   }, 
     #   {
-    #     "id"          => ... # more default segments
-    #     "name"        => ...
-    #     "definition"  => ...
+    #     :id          => ... # more default segments
+    #     :name        => ...
+    #     :definition  => ...
+    #     :updated     => ...
     #   },
     #   {
-    #     "id"          => "gaid::12345678", 
-    #     "name"        => "Name of segment", 
-    #     "definition"  => "ga:keyword=...."
+    #     :id          => "gaid::12345678", 
+    #     :name        => "Name of segment", 
+    #     :definition  => "ga:keyword=...."
+    #     :updated     => ...
     #   }, 
     #   {
-    #     "id"          => ... # more custom segments
-    #     "name"        => ...
-    #     "definition"  => ...
+    #     :id          => ... # more custom segments
+    #     :name        => ...
+    #     :definition  => ...
+    #     :updated     => ...
     #   }]
 
 ### Query by segment
@@ -283,11 +267,11 @@ Learn more about filters: [Google Data feed filtering reference](http://code.goo
     # (Google's default user segment gaid::-11)
     
     mobile_traffic = ga.get({ 
-      :start_date   => '2011-01-01', 
-      :end_date     => '2011-02-01', 
-      :dimensions   => ['month', 'year'],
-      :metrics      => ['visits', 'bounces'],
-      :segment      => 'gaid::-11'
+      start_date:   '2011-01-01', 
+      end_date:     '2011-02-01', 
+      dimensions:   ['month', 'year'],
+      metrics:      ['visits', 'bounces'],
+      segment:      'gaid::-11'
     })
 
 ### Filtering
@@ -296,33 +280,33 @@ Filters are boolean expressions in strings. Here's an example of an equality:
 
     # Filter by Firefox users
     firefox_users = ga.get({
-      :start_date   => '2010-01-01', 
-      :end_date     => '2011-01-01',
-      :dimensions   => ['month', 'year'],
-      :metrics      => ['visits', 'bounces'],
-      :filters      => ['browser == Firefox']
+      start_date:   '2010-01-01', 
+      end_date:     '2011-01-01',
+      dimensions:   ['month', 'year'],
+      metrics:      ['visits', 'bounces'],
+      filters:      ['browser == Firefox']
     })
     
 Here's an example of greater-than:
     
     # Filter where visits is >= 10000
     lots_of_visits = ga.get({
-      :start_date   => '2010-01-01', 
-      :end_date     => '2011-02-01',
-      :dimensions   => ['month', 'year'],
-      :metrics      => ['visits', 'bounces'],
-      :filters      => ['visits >= 10000']
+      start_date:   '2010-01-01', 
+      end_date:     '2011-02-01',
+      dimensions:   ['month', 'year'],
+      metrics:      ['visits', 'bounces'],
+      filters:      ['visits >= 10000']
     })
     
 Multiple filters is an array.  Currently, they are only joined by 'AND'.
 
     # Firefox users and visits >= 10000
     firefox_users_with_many_pageviews = ga.get({
-      :start_date   => '2010-01-01', 
-      :end_date     => '2011-02-01',
-      :dimensions   => ['month', 'year'],
-      :metrics      => ['visits', 'bounces'],
-      :filters      => ['browser == Firefox', 'visits >= 10000']
+      start_date:   '2010-01-01', 
+      end_date:     '2011-02-01',
+      dimensions:   ['month', 'year'],
+      metrics:      ['visits', 'bounces'],
+      filters:      ['browser == Firefox', 'visits >= 10000']
     })
 
 
@@ -333,16 +317,16 @@ Even More Examples!
 
 ### Top 25 keywords that drove traffic
 
-Output the top 25 keywords that drove traffic to your website in the first quarter of 2011.
+Output the top 25 keywords that drove traffic to your website in the first quarter of 2013.
 
     # Get the top 25 keywords that drove traffic
     data = ga.get({ 
-      :start_date => '2011-01-01',
-      :end_date => '2011-04-01',
-      :dimensions => ['keyword'],
-      :metrics => ['visits'],
-      :sort => ['-visits'],
-      :max_results => 25 
+      start_date:   '2013-01-01',
+      end_date:     '2013-04-01',
+      dimensions:   ['keyword'],
+      metrics:      ['visits'],
+      sort:         ['-visits'],
+      max_results:  25 
     })
     
     # Output our results
@@ -367,6 +351,49 @@ Output the top 25 keywords that drove traffic to your website in the first quart
 Additional Options & Settings
 =============================
 
+Meta Data
+----------------
+
+If you want to have an overview of all the metadata field you're able to use within the Reporting API.
+
+    ga = Gattica.new({
+          token: 'oauth2_token'
+      })
+    ga.metadata
+
+This will provide you with a list of all metadata.
+
+Multi Channel Funnels
+----------------
+
+Getting access to Multi Channel Funnels is working the same way as the method for getting data from the Reporting API.
+
+    ga = Gattica.new({
+          token: 'oauth2_token'
+      })
+    data = ga.mcf({ 
+      start_date:   '2013-01-01',
+      end_date:     '2013-04-01',
+      dimensions:   ['basicChannelGroupingPath'],
+      metrics:      ['totalConversions'],
+      sort:         ['-totalConversions'],
+      max_results:  25 
+    })
+
+This will provide you with a list of all metrics for multi channel funnels.
+
+Content Experiments
+----------------
+
+Get access to the Content Experiments. This works a litle different as you also have to provide the account id, web property id and profile id.
+
+    ga = Gattica.new({
+          token: 'oauth2_token'
+      })
+    experiments = ga.experiments(123456, 'UA-123456', 123456)
+
+This will provide you with a list of all experiments and variants.
+
 Setting HTTP timeout
 --------------------
 
@@ -375,27 +402,13 @@ If you have a lot of profiles in your account (like 1000+ profiles) querying for
 To avoid this, specify a timeout when you instantiate the Gattica object:
 
     ga = Gattica.new({ 
-        :email => 'email@gmail.com', 
-        :password => 'password',
-        :timeout => 600  # Set timeout for 10 minutes!
+        token: 'oauth2_token',
+        timeout: 600  # Set timeout for 10 minutes!
     })
 
 The default timeout is 300 seconds (5 minutes). Change the default in: lib/gattica/settings.rb
 
 For reference 1000 profiles with 2-5 goals each takes around 90-120 seconds.
-
-Reusing a session token
------------------------
-
-You can reuse an older session if you still have the token string.  Google recommends doing this to avoid authenticating over and over.
-
-  
-    my_token = ga.token # => 'DSasdf94...'
-    
-    # Sometime later, you can initialize Gattica with the same token
-    ga = Gattica.new({ :token => my_token })
-
-If your token times out, you will need to re-authenticate.
 
 Specifying your own headers
 ---------------------------
@@ -403,19 +416,28 @@ Specifying your own headers
 Google expects a special header in all HTTP requests called 'Authorization'.  Gattica handles this header automatically.  If you want to specify your own you can do that when you instantiate Gattica:
 
     ga = Gattica.new({
-        :token => 'DSasdf94...', 
-        :headers => {'My-Special-Header':'my_custom_value'}
+        token: 'oauth2_token',
+        headers: {'My-Special-Header':'my_custom_value'}
     })
         
-Using http proxy
+Using HTTP proxy
 -----------------
 
 You can set http proxy settings when you instantiate the Gattica object:
 
-    ga = Gattica.new({ 
-        :email => 'email@gmail.com', 
-        :password => 'password',
-        :http_proxy => { :host => 'proxy.example.com', :port => 8080, :user => 'username', :password => 'password' }
+    ga = Gattica.new({
+        token: 'oauth2_token',
+        http_proxy: { host: 'proxy.example.com', port: 8080, user: 'username', password: 'password' }
+    })
+
+GZIP Compression
+----------------
+
+You can set GZIP compression when he instantiate the Gattica object (default is false):
+
+    ga = Gattica.new({
+        token: 'oauth2_token',
+        gzip: true
     })
     
 <hr />
@@ -425,6 +447,58 @@ History
 
 Version history
 ---------------
+### 1.5.0
+  * Retrieve the experiments that you're running via the Management API.
+
+### 1.4.2
+  * Fix a bug which prevented data for accounts to be pulled.
+
+### 1.4.1
+  * Now also supporting multi channel funnel data.
+
+### 1.4
+  * Add the Metadata API to the Gattica gem.
+  
+### 1.3.4
+  * Fixed a bug that prevented users from using GZIP to get metrics and segments.
+
+### 1.3.1 & 1.3.2
+  * Always use high precision for sampled data + fix the export to CSV method.
+
+### 1.3
+  * Finally move the reporting API part to the new V3 API so you're able to retrieve the data.
+
+### 1.2.4
+  * Improve the get methods for retrieving metrics via the reporting API.
+
+### 1.2.2 & 1.2.3
+  * Provide some extra data for goals, accounts & segments.
+
+### 1.2.1
+  * Upgrade to Ruby 1.9.1 and the new Ruby hash syntax
+
+### 1.2.0
+  * Add an extra method to get only 1 metric & fix a big when returning no results (Thanks @imme5150 https://github.com/imme5150)
+
+### 1.1.0
+  * Add support for using GZIP to compress data
+  * Use efficient query parameters to the V3 Management API to increase performance 
+
+### 1.0.0
+  * Update to use Google Analytics V3 API for both reporting and management
+
+    TL;DR: Use the V3 API now
+
+    * :) Support for OAuth 2.0 as the new, recommended way to authorize users.
+    * :) New JSON based output reduces the size of the response ~10x from the previous XML output.
+    * :( It's not that easy any more to use the gem for plug and play.
+    * :( Remove support for XML output as we already support JSON.
+
+### 0.7.0
+  * Incorporated fixes by tbem
+    * Escape commas in filters.
+    * Add proxy support and ssl_ca_path support
+
 ### 0.6.1
   * Incorporated fixes by vgololobov
     * Removed circular dependency
@@ -434,7 +508,7 @@ Version history
   * Update to use Google Analytics v2.4 management API
 
     TL;DR: Uses the v2.4 API now because Google deprecated <2.3.
-      
+
     * :) - Drop-in replacement for you.
     * :) - Won't timeout anymore.
     * :) - Accounts method might be faster if you have a few profiles
@@ -514,4 +588,4 @@ Maintainer history
   * [Rob Cameron](https://github.com/activenetwork/gattica) (2010)
   * [Mike Rumble](https://github.com/rumble/gattica) (2010)
   * [Chris Le](https://github.com/chrisle/gattica) (Current)
-  
+  * [Martijn Scheijbeler](https://github.com/martijnsch/gattica) (Current)

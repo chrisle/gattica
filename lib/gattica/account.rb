@@ -1,36 +1,36 @@
 module Gattica
   class Account
     include Convertible
-    
-    attr_reader :id, :updated, :title, :table_id, :account_id, :account_name,
-                :profile_id, :web_property_id, :goals
-  
-    def initialize(xml)
-      @id = xml.at("link[@rel='self']").attributes['href']
-      @updated = DateTime.parse(xml.at(:updated).inner_html)
-      @account_id = find_account_id(xml)
 
-      @title = xpath_value(xml, "dxp:property[@name='ga:profileName']")
-      @table_id = xpath_value(xml, "dxp:property[@name='dxp:tableId']")
-      @profile_id = find_profile_id(xml)
-      @web_property_id = xpath_value(xml, "dxp:property[@name='ga:webPropertyId']")
+    attr_reader :id, :updated, :title, :account_id, :account_name, :profile_id,
+                :web_property_id, :goals, :currency, :timezone, :ecommerce,
+                :site_search
+
+    def initialize(json)
+      @id = json['id']
+      @updated = DateTime.parse(json['updated'])
+      @account_id = json['accountId']
+
+      @title = json['name']
+      @profile_id = json['id']
+      @web_property_id = json['webPropertyId']
+      @currency = json['currency']
+      @timezone = json['timezone']
+      @ecommerce = json['eCommerceTracking']
+      @site_search = !json['siteSearchQueryParameters'].nil? ? true : false
       @goals = []
     end
 
-    def xpath_value(xml, xpath)
-      xml.at(xpath).attributes['value']
+    def find_account_id(json)
+      json['id']
     end
 
-    def find_account_id(xml)
-      xml.at("dxp:property[@name='ga:accountId']").attributes['value'].to_i
+    def find_account_name(json)
+      json['name']
     end
 
-    def find_account_name(xml)
-      xml.at("dxp:property[@name='ga:accountName']").attributes['value']
-    end
-
-    def find_profile_id(xml)
-      xml.at("dxp:property[@name='ga:profileId']").attributes['value'].to_i
+    def find_profile_id(json)
+      json['profileId']
     end
 
     def set_account_name(account_feed_entry)
@@ -41,12 +41,12 @@ module Gattica
 
     def set_goals(goals_feed_entry)
       if @profile_id == find_profile_id(goals_feed_entry)
-        goal = goals_feed_entry.search('ga:goal').first
         @goals.push({
-          :active => goal.attributes['active'],
-          :name => goal.attributes['name'],
-          :number => goal.attributes['number'].to_i,
-          :value => goal.attributes['value'].to_f
+          active: goals_feed_entry['active'],
+          name: goals_feed_entry['name'],
+          value: goals_feed_entry['value'].to_f,
+          type: goals_feed_entry['type'],
+          updated: goals_feed_entry['updated']
         })
       end
     end    

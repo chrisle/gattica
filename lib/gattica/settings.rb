@@ -10,30 +10,32 @@ module Gattica
     TIMEOUT = 100
 
     DEFAULT_ARGS = {
-        :start_date => nil,
-        :end_date => nil,
-        :dimensions => [],
-        :metrics => [],
-        :filters => [],
-        :sort => []
+        start_date: nil,
+        end_date: nil,
+        dimensions: [],
+        metrics: [],
+        filters: [],
+        sort: []
     }
 
     DEFAULT_OPTIONS = {
-        :email => nil,        # eg: 'email@gmail.com'
-        :password => nil,     # eg: '$up3r_$ekret'
-        :token => nil,
-        :api_key => nil,
-        :profile_id => nil,
-        :debug => false,
-        :headers => {},
-        :logger => Logger.new(STDOUT),
-        :verify_ssl => true,
-        :http_proxy => {}
+        email: nil,        # eg: 'email@gmail.com'
+        password: nil,     # eg: '$up3r_$ekret'
+        token: nil,
+        api_key: nil,
+        profile_id: nil,
+        debug: false,
+        gzip: false,
+        headers: {},
+        logger: Logger.new(STDOUT),
+        verify_ssl: true,
+        ssl_ca_path: nil,
+        proxy: nil,        # eg: proxy: { host: '127.0.0.1', port: 3128 }
+        http_proxy: {}
     }
 
     FILTER_METRIC_OPERATORS = %w{ == != > < >= <= }
     FILTER_DIMENSION_OPERATORS = %w{ == != =~ !~ =@ ~@ }
-    
 
   end
 end
