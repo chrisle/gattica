@@ -6,17 +6,13 @@ require 'json'
 puts "
 FOLLOW THE DIRECTIONS BELOW:
 
-* Go to https://cloud.google.com/console
-* Click 'Create Project'
-* Enter a name, and click that you agree
-  (uncheck email notifications too if you want)
-* Click 'Create'
-* Click 'APIs & auth' on the left
-* Make sure only the APIs you want to grant access to are tured on,
-  like 'Analytics API' for example
-* Click 'Registered Apps' on he left
-* Click 'Register App' on the top
-* Give it a name, select 'Native' and click 'Register'
+  * Go to https://cloud.google.com/console
+  * Click 'Create Project'
+  * Enter a name, and click 'Create'
+  * Click 'APIs & auth' on the left
+  * Make sure only the APIs you want to grant access to are tured on, like 'Analytics API' for example
+  * Click 'credentials'(under APIs & auth) -> 'Create new client id'
+  * Click 'Installed application' -> 'Create client id'
 
 -- Once you've done all that, enter your 'CLIENT ID':
 (Should look like 'NNNNNNNNNNNN-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com')"
