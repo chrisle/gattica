@@ -616,5 +616,5 @@ Maintainer history
 ------------------
   * [Rob Cameron](https://github.com/activenetwork/gattica) (2010)
   * [Mike Rumble](https://github.com/rumble/gattica) (2010)
-  * [Chris Le](https://github.com/chrisle/gattica) (Current)
+  * [Chris Le](https://github.com/chrisle/gattica) (2013)
   * [Martijn Scheijbeler](https://github.com/martijnsch/gattica) (Current)

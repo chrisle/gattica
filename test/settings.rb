@@ -1,15 +1,15 @@
 module GatticaTest
-  
+
   DEFAULT_AUTH = {
-      email: 'name@email.com',
-      password: 'password',
-      debug: true
+    email: 'name@email.com',
+    password: 'password',
+    debug: true
   }
   DEFAULT_QUERY = {
-      start_date: '2010-01-01',
-      end_date: '2011-01-01',
-      dimensions: ['date'],
-      metrics: ['visits']
+    start_date: '2010-01-01',
+    end_date: '2011-01-01',
+    dimensions: ['date'],
+    metrics: ['visits']
   }
   PROFILE_ID = 23987717
 
@@ -24,5 +24,5 @@ module GatticaTest
   def self.get(options={}, profile_id=PROFILE_ID)
     ga.get(DEFAULT_QUERY.merge(options))
   end
-  
+
 end

@@ -9,7 +9,7 @@ module Gattica
     # == Options:
     # To change the defaults see link:settings.rb
     # +:debug+::        Send debug info to the logger (default is false)
-    # +:headers+::      Add additional HTTP headers (default is {} )
+    # +:headers+::      Add additional HTTP headers (default is {})
     # +:logger+::       Logger to use (default is STDOUT)
     # +:profile_id+::   Use this Google Analytics profile_id (default is nil)
     # +:timeout+::      Set Net:HTTP timeout in seconds (default is 300)

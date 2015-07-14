@@ -8,7 +8,6 @@ module Gattica
     attr_reader :id, :updated, :title, :account_id, :account_name,
                 :profile_id, :web_property_id, :goals
 
-  
     def initialize(json)
       @id = json['id']
       @updated = DateTime.parse(json['updated'])
