@@ -2,7 +2,7 @@ module Gattica
   class Engine
 
     attr_reader :user
-    attr_accessor :profile_id, :token, :user_accounts
+    attr_accessor :profile_id, :token, :user_accounts, :account_id
 
     # Initialize Gattica using username/password or token.
     #
@@ -110,6 +110,28 @@ module Gattica
         @meta_data = json['items'].collect { |md| MetaData.new(md) }
       end
       return @meta_data
+    end
+
+    # Returns the list of goals available to the authenticated user for a specific account.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.goals(123456, 'UA-123456', 123456)               # Look up goals
+    #
+    def goals(account_id, web_property_id, profile_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil? || profile_id.empty?
+
+      if @goals.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/goals")
+        json = decompress_gzip(response)
+        @goals = json['items'].collect { |md| Goals.new(md) }
+      end
+      return @goals
+
     end
 
     # Returns the list of experiments available to the authenticated user for

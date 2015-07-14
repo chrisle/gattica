@@ -394,6 +394,20 @@ Get access to the Content Experiments. This works a litle different as you also 
 
 This will provide you with a list of all experiments and variants.
 
+
+Goals
+----------------
+
+Get access to the goals of a specific profile ID. This works a litle different as you also have to provide the account id, web property id and profile id.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    goals = ga.goals(123456, 'UA-123456', 123456)
+
+This will provide you with a list of all goals.
+
+
 Setting HTTP timeout
 --------------------
 
@@ -475,6 +489,7 @@ Version history
 ### 1.5.2 (14 July 2015)
   * Be able to set the SAMPLING_LEVEL parameter yourself, it will default to higher precision.
   * Add the quotaUser parameter.
+  * Add support for only retrieving the goals for a specific profile ID.
 
 ### 1.5.0
   * Retrieve the experiments that you're running via the Management API.

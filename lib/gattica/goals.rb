@@ -16,6 +16,11 @@ module Gattica
       @title = json['name']
       @profile_id = json['id']
       @web_property_id = json['webPropertyId']
+      @active = json['active']
+      @type = json['type']
+      @created = DateTime.parse(json['created'])
+      @updated = DateTime.parse(json['updated'])
+      @value = json['value']
 
       # @goals = json.search('ga:goal').collect do |goal| {
       #   active: goal.attributes['active'],
