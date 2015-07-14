@@ -468,7 +468,8 @@ You can set GZIP compression when he instantiate the Gattica object (default is 
 Sampling Levels & QuotaUser
 ---------------------------
 
-You can set the sampling level for a get request, options: DEFAULT, FASTER or HIGHER_PRECISION:
+You can set the sampling level for a get request, options: DEFAULT, FASTER or HIGHER_PRECISION.
+You can set the quotaUser for a request to limited the quote for users.
 
     data = ga.get({
         start_date:   '2011-01-01',
@@ -491,19 +492,19 @@ Version history
   * Add the quotaUser parameter.
   * Add support for only retrieving the goals for a specific profile ID.
 
-### 1.5.0
+### 1.5.0 (March 4, 2015)
   * Retrieve the experiments that you're running via the Management API.
 
-### 1.4.2
+### 1.4.2 (March 6, 2014)
   * Fix a bug which prevented data for accounts to be pulled.
 
-### 1.4.1
+### 1.4.1 (December 1, 2013)
   * Now also supporting multi channel funnel data.
 
-### 1.4
+### 1.4 (November 29, 2013)
   * Add the Metadata API to the Gattica gem.
   
-### 1.3.4
+### 1.3.4 (November 28, 2013)
   * Fixed a bug that prevented users from using GZIP to get metrics and segments.
 
 ### 1.3.1 & 1.3.2
