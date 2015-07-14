@@ -16,7 +16,8 @@ module Gattica
         metrics: [],
         filters: [],
         sort: [],
-        sampling_level: 'HIGHER_PRECISION'
+        sampling_level: 'HIGHER_PRECISION',
+        quota_user: nil
     }
 
     DEFAULT_OPTIONS = {

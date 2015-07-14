@@ -305,6 +305,9 @@ module Gattica
       unless args[:max_results].nil?
         output += "&max-results=#{args[:max_results]}"
       end
+      unless args[:quota_user].nil?
+        output += "&quotaUser=#{args[:max_results]}"
+      end
 
       # TODO: update so that in regular expression filters (=~ and !~), any initial special characters in the regular expression aren't also picked up as part of the operator (doesn't cause a problem, but just feels dirty)
       unless args[:filters].empty?    # filters are a little more complicated because they can have all kinds of modifiers

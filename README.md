@@ -451,8 +451,8 @@ You can set GZIP compression when he instantiate the Gattica object (default is 
         gzip: true
     })
 
-Sampling Levels
-----------------
+Sampling Levels & QuotaUser
+---------------------------
 
 You can set the sampling level for a get request, options: DEFAULT, FASTER or HIGHER_PRECISION:
 
@@ -461,7 +461,8 @@ You can set the sampling level for a get request, options: DEFAULT, FASTER or HI
         end_date:     '2011-04-01',
         dimensions:   ['month', 'year'],
         metrics:      ['visits', 'bounces'],
-        sampling_level: 'FASTER'
+        sampling_level: 'FASTER',
+        quota_user:   'RANDOM_KEY'
     })
 
 <hr />
@@ -471,8 +472,9 @@ History
 
 Version history
 ---------------
-### 1.5.2
+### 1.5.2 (14 July 2015)
   * Be able to set the SAMPLING_LEVEL parameter yourself, it will default to higher precision.
+  * Add the quotaUser parameter.
 
 ### 1.5.0
   * Retrieve the experiments that you're running via the Management API.
