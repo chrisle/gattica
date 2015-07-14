@@ -358,7 +358,7 @@ If you want to have an overview of all the metadata field you're able to use wit
 
     ga = Gattica.new({
           token: 'oauth2_token'
-      })
+    })
     ga.metadata
 
 This will provide you with a list of all metadata.
@@ -370,8 +370,8 @@ Getting access to Multi Channel Funnels is working the same way as the method fo
 
     ga = Gattica.new({
           token: 'oauth2_token'
-      })
-    data = ga.mcf({ 
+    })
+    data = ga.mcf({
       start_date:   '2013-01-01',
       end_date:     '2013-04-01',
       dimensions:   ['basicChannelGroupingPath'],
@@ -388,8 +388,8 @@ Content Experiments
 Get access to the Content Experiments. This works a litle different as you also have to provide the account id, web property id and profile id.
 
     ga = Gattica.new({
-          token: 'oauth2_token'
-      })
+        token: 'oauth2_token'
+    })
     experiments = ga.experiments(123456, 'UA-123456', 123456)
 
 This will provide you with a list of all experiments and variants.
@@ -450,7 +450,20 @@ You can set GZIP compression when he instantiate the Gattica object (default is 
         token: 'oauth2_token',
         gzip: true
     })
-    
+
+Sampling Levels
+----------------
+
+You can set the sampling level for a get request, options: DEFAULT, FASTER or HIGHER_PRECISION:
+
+    data = ga.get({
+        start_date:   '2011-01-01',
+        end_date:     '2011-04-01',
+        dimensions:   ['month', 'year'],
+        metrics:      ['visits', 'bounces'],
+        sampling_level: 'FASTER'
+    })
+
 <hr />
 
 History
@@ -458,6 +471,9 @@ History
 
 Version history
 ---------------
+### 1.5.2
+  * Be able to set the SAMPLING_LEVEL parameter yourself, it will default to higher precision.
+
 ### 1.5.0
   * Retrieve the experiments that you're running via the Management API.
 

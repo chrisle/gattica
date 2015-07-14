@@ -15,7 +15,8 @@ module Gattica
         dimensions: [],
         metrics: [],
         filters: [],
-        sort: []
+        sort: [],
+        sampling_level: 'HIGHER_PRECISION'
     }
 
     DEFAULT_OPTIONS = {

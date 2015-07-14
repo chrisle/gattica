@@ -18,6 +18,8 @@ module Gattica
     # +:verify_ssl+::   Verify SSL connection (default is true)
     # +:ssl_ca_path+::  PATH TO SSL CERTIFICATES to see this run on command line:(openssl version -a) ubuntu path eg:"/usr/lib/ssl/certs"
     # +:proxy+::        If you need to pass over a proxy eg: proxy => { host: '127.0.0.1', port: 3128 }
+    # +:http_proxy+::   Set the host, password, user and port eg: http_proxy => { host: '', port: '', username: '', password: '' }
+    # +:gzip+::         If you want to GZIP compress the response from Google Analytics (default is false)
     def initialize(options={})
       @options = Settings::DEFAULT_OPTIONS.merge(options)
       handle_init_options(@options)
@@ -196,7 +198,7 @@ module Gattica
       query_string = build_query_string(args,@profile_id)
       @logger.debug(query_string) if @debug
       create_http_connection('www.googleapis.com')
-      data = do_http_get("/analytics/v3/data/ga?samplingLevel=HIGHER_PRECISION&#{query_string}")
+      data = do_http_get("/analytics/v3/data/ga?#{query_string}")
       json = decompress_gzip(data)
       return DataSet.new(json)
     end
@@ -206,7 +208,7 @@ module Gattica
       query_string = build_query_string(args,@profile_id,true)
       @logger.debug(query_string) if @debug
       create_http_connection('www.googleapis.com')
-      data = do_http_get("/analytics/v3/data/mcf?samplingLevel=HIGHER_PRECISION&#{query_string}")
+      data = do_http_get("/analytics/v3/data/mcf?#{query_string}")
       json = decompress_gzip(data)
       return DataSet.new(json)
     end
@@ -278,7 +280,7 @@ module Gattica
 
     # Creates a valid query string for GA
     def build_query_string(args,profile,mcf=false)
-      output = "ids=ga:#{profile}&start-date=#{args[:start_date]}&end-date=#{args[:end_date]}"
+      output = "ids=ga:#{profile}&start-date=#{args[:start_date]}&end-date=#{args[:end_date]}&samplingLevel=#{args[:sampling_level]}"
       if (start_index = args[:start_index].to_i) > 0
         output += "&start-index=#{start_index}"
       end
