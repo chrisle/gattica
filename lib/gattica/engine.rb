@@ -324,9 +324,6 @@ module Gattica
       unless args[:segment].nil?
         output += "&segment=#{args[:segment]}"
       end
-      unless args[:max_results].nil?
-        output += "&max-results=#{args[:max_results]}"
-      end
       unless args[:quota_user].nil?
         output += "&quotaUser=#{args[:max_results]}"
       end
