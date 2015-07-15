@@ -4,7 +4,7 @@ Gattica is an easy to use Gem for getting data from the Google Analytics API V3.
 
 Features
 --------
-* Supports: metrics, dimensions, sorting, filters, goals, and segments.
+* Supports: metrics, dimensions, sorting, filters, goals, mcf, and segments.
 * Get acces to the Management API, Reporting API, MCF Reporting API and the Metadata API.
 * Handles accounts with over 1000 profiles
 * Returns data as: hash, json, CSV
@@ -408,6 +408,19 @@ Get access to the goals of a specific profile ID. This works a litle different a
 This will provide you with a list of all goals.
 
 
+Properties
+----------------
+
+Get access to the properties of a specific account ID.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    goals = ga.properties(123456)
+
+This will provide you with a list of all properties in the account.
+
+
 Setting HTTP timeout
 --------------------
 
@@ -490,6 +503,7 @@ Version history
 ---------------
 ### 1.5.3 (15 July 2015)
   * Add support for adding the max_results parameter to get requests.
+  * Add a new end point to return the properties for an account.
 
 ### 1.5.2 (14 July 2015)
   * Be able to set the SAMPLING_LEVEL parameter yourself, it will default to higher precision.

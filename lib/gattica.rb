@@ -28,7 +28,7 @@ require 'gattica/variant'
 # Please see the README for usage docs.
 module Gattica
 
-  VERSION = '1.5.2'
+  VERSION = '1.5.3'
 
   # Creates a new instance of Gattica::Engine
   def self.new(*args)

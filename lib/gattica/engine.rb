@@ -69,7 +69,20 @@ module Gattica
         end
 
       end
-      @user_accounts
+      return @user_accounts
+    end
+
+    def properties(account_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+
+      if @properties.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{@account_id}/webproperties")
+        json = decompress_gzip(response)
+        @properties = json['items'].collect { |p| Property.new(p) }
+      end
+      return @properties
     end
 
     # Returns the list of segments available to the authenticated user.

@@ -5,12 +5,14 @@ module GatticaTest
     password: 'password',
     debug: true
   }
+
   DEFAULT_QUERY = {
     start_date: '2010-01-01',
     end_date: '2011-01-01',
     dimensions: ['date'],
     metrics: ['visits']
   }
+
   PROFILE_ID = 23987717
 
   def self.ga(options={}, profile_id=PROFILE_ID)
