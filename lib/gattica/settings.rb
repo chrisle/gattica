@@ -17,7 +17,8 @@ module Gattica
         filters: [],
         sort: [],
         sampling_level: 'HIGHER_PRECISION',
-        quota_user: nil
+        quota_user: nil,
+        max_results: 10000,
     }
 
     DEFAULT_OPTIONS = {

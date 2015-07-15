@@ -465,10 +465,10 @@ You can set GZIP compression when he instantiate the Gattica object (default is 
         gzip: true
     })
 
-Sampling Levels & QuotaUser
----------------------------
+Sampling Levels, QuotaUser & Max results
+----------------------------------------
 
-You can set the sampling level for a get request, options: DEFAULT, FASTER or HIGHER_PRECISION.
+You can set the sampling level for a get request, options: DEFAULT, FASTER or HIGHER_PRECISION (default is HIGHER_PRECISION).
 You can set the quotaUser for a request to limited the quote for users.
 
     data = ga.get({
@@ -477,7 +477,8 @@ You can set the quotaUser for a request to limited the quote for users.
         dimensions:   ['month', 'year'],
         metrics:      ['visits', 'bounces'],
         sampling_level: 'FASTER',
-        quota_user:   'RANDOM_KEY'
+        quota_user:   'RANDOM_KEY',
+        max_results:  10000
     })
 
 <hr />
@@ -487,6 +488,9 @@ History
 
 Version history
 ---------------
+### 1.5.3 (15 July 2015)
+  * Add support for adding the max_results parameter to get requests.
+
 ### 1.5.2 (14 July 2015)
   * Be able to set the SAMPLING_LEVEL parameter yourself, it will default to higher precision.
   * Add the quotaUser parameter.

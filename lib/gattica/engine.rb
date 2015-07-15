@@ -302,7 +302,7 @@ module Gattica
 
     # Creates a valid query string for GA
     def build_query_string(args,profile,mcf=false)
-      output = "ids=ga:#{profile}&start-date=#{args[:start_date]}&end-date=#{args[:end_date]}&samplingLevel=#{args[:sampling_level]}"
+      output = "ids=ga:#{profile}&start-date=#{args[:start_date]}&end-date=#{args[:end_date]}&samplingLevel=#{args[:sampling_level]}&max-results=#{args[:max_results]}"
       if (start_index = args[:start_index].to_i) > 0
         output += "&start-index=#{start_index}"
       end
