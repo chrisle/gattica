@@ -408,8 +408,8 @@ Get access to the goals of a specific profile ID. This works a litle different a
 This will provide you with a list of all goals.
 
 
-Properties
-----------------
+Properties & Profiles
+---------------------
 
 Get access to the properties of a specific account ID.
 
@@ -417,6 +417,7 @@ Get access to the properties of a specific account ID.
         token: 'oauth2_token'
     })
     goals = ga.properties(123456)
+    goals = ga.profiles(123456, 123456)
 
 This will provide you with a list of all properties in the account.
 
@@ -504,6 +505,7 @@ Version history
 ### 1.5.3 (15 July 2015)
   * Add support for adding the max_results parameter to get requests.
   * Add a new end point to return the properties for an account.
+  * Add a new end point to return the profiles for a web property.
 
 ### 1.5.2 (14 July 2015)
   * Be able to set the SAMPLING_LEVEL parameter yourself, it will default to higher precision.

@@ -78,11 +78,25 @@ module Gattica
 
       if @properties.nil?
         create_http_connection('www.googleapis.com')
-        response = do_http_get("/analytics/v3/management/accounts/#{@account_id}/webproperties")
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties")
         json = decompress_gzip(response)
         @properties = json['items'].collect { |p| Property.new(p) }
       end
       return @properties
+    end
+
+    def profiles(account_id, web_property_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+
+      if @profiles.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles")
+        json = decompress_gzip(response)
+        @profiles = json['items'].collect { |p| Profile.new(p) }
+      end
+      return @profiles
     end
 
     # Returns the list of segments available to the authenticated user.

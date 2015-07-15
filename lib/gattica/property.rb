@@ -3,6 +3,7 @@ require 'json'
 
 module Gattica
   class Property
+    include Convertible
 
     attr_reader :id, :kind, :created, :updated, :industry_vertical,
                 :level, :name, :profile_count

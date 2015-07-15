@@ -3,6 +3,7 @@ require 'json'
 
 module Gattica
   class Experiment
+    include Convertible
 
     attr_reader :id, :account_id, :created, :editable_in_ga_ui, :description,
                 :end_time, :equal_weighting, :internal_web_property_id, :kind,
