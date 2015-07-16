@@ -652,18 +652,11 @@ Todo
 
 Management API
 --------------
-  * List web properties.
-  * List views (profiles).
   * List all filters.
-  * List all goals.
   * List custom data sources.
   * List custom metrics.
   * List custom dimensions.
   * List unsampled reports.
-
-Reporting API
--------------
-  * Add quotaUser options.
 
 
 Maintainer history

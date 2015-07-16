@@ -1,7 +1,6 @@
 module Gattica
 
   # Common output methods that are sharable
-
   module Convertible
 
     # Output as hash

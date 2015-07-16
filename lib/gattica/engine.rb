@@ -72,6 +72,13 @@ module Gattica
       return @user_accounts
     end
 
+    # Returns the list of properties the user has access to. A user may have
+    # multiple properties on a Google Analytics account.
+    # You need the account_id in order to get info from GA.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.properties(12346)        # Look up properties
     def properties(account_id)
 
       raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
@@ -84,6 +91,14 @@ module Gattica
       end
       return @properties
     end
+
+    # Returns the list of profiles the user has access to. A user may have
+    # multiple profiles on a Google Analytics web property.
+    # You need the account_id & web property ID in order to get info from GA.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.profiles(12346, 123456)        # Look up profiles
 
     def profiles(account_id, web_property_id)
 
@@ -107,6 +122,7 @@ module Gattica
     #   my_gaid = 'gaid::-5'              # Non-paid Search Traffic
     #   ga.profile_id = 12345678          # Set our profile ID
     #
+    #   Next up you can use the segment id in your Gattica::Get call
     #   ga.get({ start_date: '2008-01-01',
     #            end_date: '2008-02-01',
     #            dimensions: 'month',

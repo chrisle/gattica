@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
     "lib/gattica/goals.rb",
     "lib/gattica/hash_extensions.rb",
     "lib/gattica/meta_data.rb",
-    "lib/gattica/profiles.rb",
+    "lib/gattica/profile.rb",
     "lib/gattica/property.rb",
     "lib/gattica/segment.rb",
     "lib/gattica/settings.rb",
