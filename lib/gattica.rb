@@ -26,12 +26,13 @@ require 'gattica/variant'
 require 'gattica/profile'
 require 'gattica/property'
 require 'gattica/goal'
+require 'gattica/filter'
 
 # Gattica is a Ruby library for talking to the Google Analytics API.
 # Please see the README for usage docs.
 module Gattica
 
-  VERSION = '1.5.3'
+  VERSION = '1.5.4'
 
   # Creates a new instance of Gattica::Engine
   def self.new(*args)

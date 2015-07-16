@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "gattica"
-  s.version = "1.5.3"
+  s.version = "1.5.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Martijn Scheijbeler, Christopher Le, et all"]
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     "lib/gattica/engine.rb",
     "lib/gattica/exceptions.rb",
     "lib/gattica/experiment.rb",
+    "lib/gattica/filter.rb",
     "lib/gattica/goals.rb",
     "lib/gattica/hash_extensions.rb",
     "lib/gattica/meta_data.rb",

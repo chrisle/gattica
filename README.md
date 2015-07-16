@@ -408,6 +408,19 @@ Get access to the goals of a specific profile ID. This works a litle different a
 This will provide you with a list of all goals.
 
 
+Filters
+----------------
+
+Get access to the goals of a specific account ID. This works a litle different as you also have to provide the account id.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    filters = ga.filters(123456)
+
+This will provide you with a list of all filters.
+
+
 Properties & Profiles
 ---------------------
 
@@ -416,10 +429,10 @@ Get access to the properties of a specific account ID.
     ga = Gattica.new({
         token: 'oauth2_token'
     })
-    goals = ga.properties(123456)
-    goals = ga.profiles(123456, 123456)
+    properties = ga.properties(123456)
+    profiles = ga.profiles(123456, 123456)
 
-This will provide you with a list of all properties in the account.
+This will provide you with a list of all properties or profiles in the account.
 
 
 Setting HTTP timeout
@@ -502,6 +515,10 @@ History
 
 Version history
 ---------------
+### 1.5.3 (16 July 2015)
+  * Add a new end point to return the filters for an account.
+  * Rewrite some code + add more documentation.
+
 ### 1.5.3 (15 July 2015)
   * Add support for adding the max_results parameter to get requests.
   * Add a new end point to return the properties for an account.

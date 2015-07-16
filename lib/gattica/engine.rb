@@ -155,7 +155,8 @@ module Gattica
       return @meta_data
     end
 
-    # Returns the list of goals available to the authenticated user for a specific account.
+    # Returns the list of goals available to the authenticated user for a
+    # specific account.
     #
     # == Usage
     #   ga = Gattica.new({token: 'oauth2_token'})
@@ -171,9 +172,30 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/goals")
         json = decompress_gzip(response)
-        @goals = json['items'].collect { |md| Goals.new(md) }
+        @goals = json['items'].collect { |g| Goals.new(g) }
       end
       return @goals
+
+    end
+
+    # Returns the list of filter available to the authenticated user for a
+    # specific account.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.filters(123456)               # Look up filters
+    #
+    def filters(account_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+
+      if @filters.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/filters")
+        json = decompress_gzip(response)
+        @filters = json['items'].collect { |f| Filter.new(f) }
+      end
+      return @filters
 
     end
 
