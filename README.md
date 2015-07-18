@@ -515,7 +515,7 @@ History
 
 Version history
 ---------------
-### 1.5.3 (16 July 2015)
+### 1.5.4 (16 July 2015)
   * Add a new end point to return the filters for an account.
   * Rewrite some code + add more documentation.
 

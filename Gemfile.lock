@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    gattica (1.5.0)
+    gattica (1.5.4)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    json (1.8.2)
-    power_assert (0.2.3)
-    test-unit (3.0.9)
+    json (1.8.3)
+    power_assert (0.2.4)
+    test-unit (3.1.2)
       power_assert
 
 PLATFORMS
