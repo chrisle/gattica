@@ -416,9 +416,22 @@ Get access to the goals of a specific account ID. This works a litle different a
     ga = Gattica.new({
         token: 'oauth2_token'
     })
-    filters = ga.filters(123456)
+    ga.account_id = 123456
+    filters = ga.filters
 
 This will provide you with a list of all filters.
+
+Custom Metrics
+----------------
+
+Get access to the goals of a specific web property ID. This works a litle different as you also have to provide the account id + web property ID.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    custom_metrics = ga.custom_metrics(123456, 123456)
+
+This will provide you with a list of all custom metrics.
 
 
 Properties & Profiles
@@ -429,7 +442,8 @@ Get access to the properties of a specific account ID.
     ga = Gattica.new({
         token: 'oauth2_token'
     })
-    properties = ga.properties(123456)
+    ga.account_id = 123456
+    properties = ga.properties
     profiles = ga.profiles(123456, 123456)
 
 This will provide you with a list of all properties or profiles in the account.
@@ -515,6 +529,9 @@ History
 
 Version history
 ---------------
+### 1.5.5 (19 July 2015)
+  * Add a new end point to return the custom metrics for a web property ID.
+
 ### 1.5.4 (16 July 2015)
   * Add a new end point to return the filters for an account.
   * Rewrite some code + add more documentation.

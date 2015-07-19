@@ -79,7 +79,8 @@ module Gattica
     #
     # == Usage
     #   ga = Gattica.new({token: 'oauth2_token'})
-    #   ga.properties(12346)        # Look up properties
+    #   ga.account_id = 123456
+    #   ga.properties        # Look up properties
     def properties
 
       raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil? || @account_id.empty?
@@ -179,12 +180,35 @@ module Gattica
 
     end
 
+    # Returns the list of custom metrics available to the authenticated user
+    # for a specific web property ID.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.custom_metrics(123456, 'UA-123456')       # Look up custom metrics
+    #
+    def custom_metrics(account_id, web_property_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+
+      if @custom_metrics.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customMetrics")
+        json = decompress_gzip(response)
+        @custom_metrics = json['items'].collect { |cm| CustomMetric.new(cm) }
+      end
+      return @custom_metrics
+
+    end
+
     # Returns the list of filter available to the authenticated user for a
     # specific account.
     #
     # == Usage
     #   ga = Gattica.new({token: 'oauth2_token'})
-    #   ga.filters(123456)               # Look up filters
+    #   ga.account_id = 123456
+    #   ga.filters               # Look up filters
     #
     def filters
 
