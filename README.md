@@ -532,6 +532,7 @@ Version history
 ---------------
 ### 1.5.5 (19 July 2015)
   * Add a new end point to return the custom metrics for a web property ID.
+  * Add a new end point to return the custom dimensions for a web property ID.
 
 ### 1.5.4 (16 July 2015)
   * Add a new end point to return the filters for an account.
