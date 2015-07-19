@@ -28,6 +28,7 @@ require 'gattica/property'
 require 'gattica/goal'
 require 'gattica/filter'
 require 'gattica/custom_metric'
+require 'gattica/custom_dimension'
 
 # Gattica is a Ruby library for talking to the Google Analytics API.
 # Please see the README for usage docs.

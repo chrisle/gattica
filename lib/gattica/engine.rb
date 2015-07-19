@@ -202,6 +202,28 @@ module Gattica
 
     end
 
+    # Returns the list of custom dimensions available to the authenticated user
+    # for a specific web property ID.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.custom_dimensions(123456, 'UA-123456')       # Look up custom dimensions
+    #
+    def custom_dimensions(account_id, web_property_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+
+      if @custom_metrics.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDimensions")
+        json = decompress_gzip(response)
+        @custom_metrics = json['items'].collect { |cd| CustomDimension.new(cd) }
+      end
+      return @custom_metrics
+
+    end
+
     # Returns the list of filter available to the authenticated user for a
     # specific account.
     #

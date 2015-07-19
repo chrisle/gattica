@@ -421,17 +421,18 @@ Get access to the goals of a specific account ID. This works a litle different a
 
 This will provide you with a list of all filters.
 
-Custom Metrics
-----------------
+Custom Metrics & Dimensions
+---------------------------
 
-Get access to the goals of a specific web property ID. This works a litle different as you also have to provide the account id + web property ID.
+Get access to the custom dimensions and metrics of a specific web property ID. This works a litle different as you also have to provide the account id + web property ID.
 
     ga = Gattica.new({
         token: 'oauth2_token'
     })
     custom_metrics = ga.custom_metrics(123456, 123456)
+    custom_dimensions = ga.custom_dimensions(123456, 123456)
 
-This will provide you with a list of all custom metrics.
+This will provide you with a list of all custom metrics or custom dimensions.
 
 
 Properties & Profiles

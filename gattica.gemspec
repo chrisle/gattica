@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "lib/gattica/convertible.rb",
     "lib/gattica/data_set.rb",
     "lib/gattica/custom_metric.rb",
+    "lib/gattica/custom_dimension.rb",
     "lib/gattica/engine.rb",
     "lib/gattica/exceptions.rb",
     "lib/gattica/experiment.rb",
