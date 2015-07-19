@@ -8,6 +8,8 @@ module Gattica
                 :end_date, :points, :xml, :sampled_data, :total_for_all_results, :headers
 
     def initialize(json)
+      columns, headers = [], []
+
       @xml = json.to_s
       @total_results = json['totalResults'].to_i
       @start_index = json['query']['start-index'].to_i
@@ -16,10 +18,8 @@ module Gattica
       @end_date = Date.parse(json['query']['end-date'])
       @sampled_data = json['containsSampledData']
       @total_for_all_results = json['totalsForAllResults']
-      headers = []
       json['columnHeaders'].each { |column| headers << column['name'].gsub('ga:','').to_sym }
       @headers = headers
-      columns = []
       json['rows'].each { |entry| columns << Hash[headers.zip(entry)] } if json['rows']
       @points = columns
     end

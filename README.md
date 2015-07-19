@@ -83,20 +83,20 @@ General Usage
 ### Set which profile Gattica needs to use
 
     # Tell Gattica to query profile ID 5555555
-    ga.profile_id = 5555555 
+    ga.profile_id = 5555555
 
 ### Get data from Google Analytics
     
-The Get method will get data from Google Analytics and return Gattica::DataSet type.  
+The Get method will get data from Google Analytics and return Gattica::DataSet type.
 
-* Dates must be in 'YYYY-MM-DD' format.  
+* Dates must be in 'YYYY-MM-DD' format.
 * Dimensions and metrics can be gotten from [Google Analytics Dimensions & Metrics Reference](http://code.google.com/apis/analytics/docs/gdata/gdataReferenceDimensionsMetrics.html)
 * You do not need to use "ga:" at the beginning of the strings.
 
 Here's an example:
 
     # Get the number of visitors by month from Jan 1st to April 1st.
-    data = ga.get({ 
+    data = ga.get({
         start_date:   '2011-01-01',
         end_date:     '2011-04-01',
         dimensions:   ['month', 'year'],
@@ -210,15 +210,15 @@ Learn more about filters: [Google Data feed filtering reference](http://code.goo
     #     :site_search       => true,
     #     :goals =>[{
     #         :active   => "true", 
-    #         :name     => "Goal name", 
+    #         :name     => "Goal name",
     #         :number   => 1, 
     #         :value    => 0.0
     #     }]
     #   }, 
     #   {
     #     :id                => "http://www.google.com/analytics/feeds/accounts/ga:...",
-    #     :updated           => Mon, 16 May 2011 16:40:30 -0700, 
-    #     :title             => "Profile Title", 
+    #     :updated           => Mon, 16 May 2011 16:40:30 -0700,
+    #     :title             => "Profile Title",
     #     ...
     #   }]
 
