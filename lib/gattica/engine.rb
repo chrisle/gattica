@@ -2,7 +2,8 @@ module Gattica
   class Engine
 
     attr_reader :user
-    attr_accessor :profile_id, :token, :user_accounts, :account_id
+    attr_accessor :profile_id, :token, :user_accounts, :account_id,
+                  :web_property_id
 
     # Initialize Gattica using username/password or token.
     #
@@ -79,9 +80,9 @@ module Gattica
     # == Usage
     #   ga = Gattica.new({token: 'oauth2_token'})
     #   ga.properties(12346)        # Look up properties
-    def properties(account_id)
+    def properties
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil? || @account_id.empty?
 
       if @properties.nil?
         create_http_connection('www.googleapis.com')
@@ -185,9 +186,9 @@ module Gattica
     #   ga = Gattica.new({token: 'oauth2_token'})
     #   ga.filters(123456)               # Look up filters
     #
-    def filters(account_id)
+    def filters
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil? || @account_id.empty?
 
       if @filters.nil?
         create_http_connection('www.googleapis.com')
