@@ -407,7 +407,7 @@ module Gattica
 
     def add_api_key(query_string)
       query_string += "&key=#{@options[:api_key]}" if @options[:api_key]
-      query_string
+      return query_string
     end
 
     # Does the work of making HTTP calls and then going through a suite of tests on the response to make
@@ -448,9 +448,9 @@ module Gattica
     # Decompress the JSON if GZIP is enabled
     def decompress_gzip(response)
       if @options[:gzip]
-        sio       = StringIO.new(response)
-        gz        = Zlib::GzipReader.new(sio)
-        response  = gz.read()
+        sio = StringIO.new(response)
+        gz = Zlib::GzipReader.new(sio)
+        response = gz.read()
       end
       json = JSON.parse(response)
       return json
