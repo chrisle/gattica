@@ -83,7 +83,7 @@ module Gattica
     #   ga.properties        # Look up properties
     def properties
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil? || @account_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil?
 
       if @properties.nil?
         create_http_connection('www.googleapis.com')
@@ -104,8 +104,8 @@ module Gattica
 
     def profiles(account_id, web_property_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
 
       if @profiles.nil?
         create_http_connection('www.googleapis.com')
@@ -166,15 +166,15 @@ module Gattica
     #
     def goals(account_id, web_property_id, profile_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
-      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil? || profile_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
+      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil?
 
       if @goals.nil?
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/goals")
         json = decompress_gzip(response)
-        @goals = json['items'].collect { |g| Goals.new(g) }
+        @goals = json['items'].collect { |g| Goal.new(g) }
       end
       return @goals
 
@@ -189,8 +189,8 @@ module Gattica
     #
     def custom_metrics(account_id, web_property_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
 
       if @custom_metrics.nil?
         create_http_connection('www.googleapis.com')
@@ -211,8 +211,8 @@ module Gattica
     #
     def custom_dimensions(account_id, web_property_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
 
       if @custom_dimensions.nil?
         create_http_connection('www.googleapis.com')
@@ -233,8 +233,8 @@ module Gattica
     #
     def custom_data_sources(account_id, web_property_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
 
       if @custom_data_sources.nil?
         create_http_connection('www.googleapis.com')
@@ -256,7 +256,7 @@ module Gattica
     #
     def filters
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil? || @account_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if @account_id.nil?
 
       if @filters.nil?
         create_http_connection('www.googleapis.com')
@@ -277,9 +277,9 @@ module Gattica
     #
     def experiments(account_id, web_property_id, profile_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
-      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil? || profile_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
+      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil?
 
       if @experiments.nil?
         create_http_connection('www.googleapis.com')
@@ -299,9 +299,9 @@ module Gattica
     #
     def unsampled_reports(account_id, web_property_id, profile_id)
 
-      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
-      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
-      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil? || profile_id.empty?
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
+      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil?
 
       if @unsampled_reports.nil?
         create_http_connection('www.googleapis.com')
