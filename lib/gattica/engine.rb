@@ -214,13 +214,35 @@ module Gattica
       raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
       raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
 
-      if @custom_metrics.nil?
+      if @custom_dimensions.nil?
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDimensions")
         json = decompress_gzip(response)
-        @custom_metrics = json['items'].collect { |cd| CustomDimension.new(cd) }
+        @custom_dimensions = json['items'].collect { |cd| CustomDimension.new(cd) }
       end
-      return @custom_metrics
+      return @custom_dimensions
+
+    end
+
+    # Returns the list of custom data sources available to the authenticated user
+    # for a specific web property ID.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.custom_data_sources(123456, 'UA-123456')       # Look up custom data sources
+    #
+    def custom_data_sources(account_id, web_property_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+
+      if @custom_data_sources.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDataSources")
+        json = decompress_gzip(response)
+        @custom_data_sources = json['items'].collect { |cds| CustomDataSource.new(cds) }
+      end
+      return @custom_data_sources
 
     end
 
@@ -326,7 +348,7 @@ module Gattica
     # If a user doesn't have access to the +profile_id+ you specified, you'll receive an error.
     # Likewise, if you attempt to access a dimension or metric that doesn't exist, you'll get an
     # error back from Google Analytics telling you so.
-
+    #
     def get(args={})
       args = validate_and_clean(Settings::DEFAULT_ARGS.merge(args))
       query_string = build_query_string(args,@profile_id)
