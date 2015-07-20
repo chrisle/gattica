@@ -382,6 +382,7 @@ Getting access to Multi Channel Funnels is working the same way as the method fo
 
 This will provide you with a list of all metrics for multi channel funnels.
 
+
 Content Experiments
 ----------------
 
@@ -393,6 +394,19 @@ Get access to the Content Experiments. This works a litle different as you also 
     experiments = ga.experiments(123456, 'UA-123456', 123456)
 
 This will provide you with a list of all experiments and variants.
+
+
+Unsampled Reports
+----------------
+
+Get access to the Unsampled Reports for a profile ID. This works a litle different as you also have to provide the account id, web property id and profile id.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    unsampled_reports = ga.unsampled_reports(123456, 'UA-123456', 123456)
+
+This will provide you with a list of all unsampled reports.
 
 
 Goals
@@ -420,6 +434,7 @@ Get access to the goals of a specific account ID. This works a litle different a
     filters = ga.filters
 
 This will provide you with a list of all filters.
+
 
 Custom Metrics, Custom Dimensions & Custom Data Sources
 -------------------------------------------------------
@@ -533,6 +548,7 @@ Version history
 ---------------
 ### 1.5.6 (20 July 2015)
   * Add a new end point to return the custom data sources for a web property ID.
+  * Add a new end point to return the unsampled reports for a profile ID.
 
 ### 1.5.5 (19 July 2015)
   * Add a new end point to return the custom metrics for a web property ID.

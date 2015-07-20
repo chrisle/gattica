@@ -273,7 +273,7 @@ module Gattica
     #
     # == Usage
     #   ga = Gattica.new({token: 'oauth2_token'})
-    #   ga.experiments(123456, 'UA-123456', 123456)         # Look up meta data
+    #   ga.experiments(123456, 'UA-123456', 123456)         # Look up experiments
     #
     def experiments(account_id, web_property_id, profile_id)
 
@@ -285,9 +285,31 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/experiments")
         json = decompress_gzip(response)
-        @experiments = json['items'].collect { |experiment| Experiment.new(experiment) }
+        @experiments = json['items'].collect { |exp| Experiment.new(exp) }
       end
       return @experiments
+    end
+
+    # Returns the list of unsampled reports available to the authenticated user for
+    # a specific profile.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.unsampled_reports(123456, 'UA-123456', 123456)         # Look up unsampled reports
+    #
+    def unsampled_reports(account_id, web_property_id, profile_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil? || account_id.empty?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil? || web_property_id.empty?
+      raise GatticaError::MissingProfileId, 'profile_id is required' if profile_id.nil? || profile_id.empty?
+
+      if @unsampled_reports.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/unsampledReports")
+        json = decompress_gzip(response)
+        @unsampled_reports = json['items'].collect { |ur| UnsampledReport.new(ur) }
+      end
+      return @unsampled_reports
     end
 
     # This is a convenience method if you want just 1 data point.

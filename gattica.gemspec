@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     "lib/gattica/property.rb",
     "lib/gattica/segment.rb",
     "lib/gattica/settings.rb",
+    "lib/gattica/unsampled_report.rb",
     "lib/gattica/variant.rb",
     "test/helper.rb",
     "test/settings.rb",
