@@ -53,7 +53,7 @@ module Gattica
         # Get profiles
         response = do_http_get("/analytics/v3/management/accounts/~all/webproperties/~all/profiles?max-results=10000&fields=items(id,name,updated,accountId,webPropertyId,eCommerceTracking,currency,timezone,siteSearchQueryParameters)")
         json = decompress_gzip(response)
-        @user_accounts = json['items'].collect { |profile_json| Account.new(profile_json) }
+        @user_accounts = json['items'].collect { |profile_json| Data::Account.new(profile_json) }
 
         # Fill in the goals
         response = do_http_get("/analytics/v3/management/accounts/~all/webproperties/~all/profiles/~all/goals?max-results=10000&fields=items(profileId,name,value,active,type,updated)")
@@ -89,7 +89,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties")
         json = decompress_gzip(response)
-        @properties = json['items'].collect { |p| Property.new(p) }
+        @properties = json['items'].collect { |p| Data::Property.new(p) }
       end
       return @properties
     end
@@ -111,7 +111,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles")
         json = decompress_gzip(response)
-        @profiles = json['items'].collect { |p| Profile.new(p) }
+        @profiles = json['items'].collect { |p| Data::Profile.new(p) }
       end
       return @profiles
     end
@@ -136,7 +136,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get('/analytics/v3/management/segments?max-results=10000&fields=items(id,name,definition,updated)')
         json = decompress_gzip(response)
-        @user_segments = json['items'].collect { |s| Segment.new(s) }
+        @user_segments = json['items'].collect { |s| Data::Segment.new(s) }
       end
       return @user_segments
     end
@@ -152,7 +152,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get('/analytics/v3/metadata/ga/columns')
         json = decompress_gzip(response)
-        @meta_data = json['items'].collect { |md| MetaData.new(md) }
+        @meta_data = json['items'].collect { |md| Data::MetaData.new(md) }
       end
       return @meta_data
     end
@@ -174,7 +174,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/goals")
         json = decompress_gzip(response)
-        @goals = json['items'].collect { |g| Goal.new(g) }
+        @goals = json['items'].collect { |g| Data::Goal.new(g) }
       end
       return @goals
 
@@ -196,7 +196,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customMetrics")
         json = decompress_gzip(response)
-        @custom_metrics = json['items'].collect { |cm| CustomMetric.new(cm) }
+        @custom_metrics = json['items'].collect { |cm| Data::CustomMetric.new(cm) }
       end
       return @custom_metrics
 
@@ -218,7 +218,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDimensions")
         json = decompress_gzip(response)
-        @custom_dimensions = json['items'].collect { |cd| CustomDimension.new(cd) }
+        @custom_dimensions = json['items'].collect { |cd| Data::CustomDimension.new(cd) }
       end
       return @custom_dimensions
 
@@ -240,7 +240,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDataSources")
         json = decompress_gzip(response)
-        @custom_data_sources = json['items'].collect { |cds| CustomDataSource.new(cds) }
+        @custom_data_sources = json['items'].collect { |cds| Data::CustomDataSource.new(cds) }
       end
       return @custom_data_sources
 
@@ -262,7 +262,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/filters")
         json = decompress_gzip(response)
-        @filters = json['items'].collect { |f| Filter.new(f) }
+        @filters = json['items'].collect { |f| Data::Filter.new(f) }
       end
       return @filters
 
@@ -285,7 +285,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/experiments")
         json = decompress_gzip(response)
-        @experiments = json['items'].collect { |exp| Experiment.new(exp) }
+        @experiments = json['items'].collect { |exp| Data::Experiment.new(exp) }
       end
       return @experiments
     end
@@ -307,7 +307,7 @@ module Gattica
         create_http_connection('www.googleapis.com')
         response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/profiles/#{profile_id}/unsampledReports")
         json = decompress_gzip(response)
-        @unsampled_reports = json['items'].collect { |ur| UnsampledReport.new(ur) }
+        @unsampled_reports = json['items'].collect { |ur| Data::UnsampledReport.new(ur) }
       end
       return @unsampled_reports
     end

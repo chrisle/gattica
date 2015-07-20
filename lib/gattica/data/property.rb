@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class Property
+  class Data::Property
     include Convertible
 
     attr_reader :id, :kind, :created, :updated, :industry_vertical,

@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class MetaData
+  class Data::MetaData
     include Convertible
 
     attr_reader :id, :kind, :type, :data_type, :group, :status, :ui_name,

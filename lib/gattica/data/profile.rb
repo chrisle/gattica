@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class Profile
+  class Data::Profile
     include Convertible
 
     attr_reader :id, :updated, :title, :account_id, :account_name,

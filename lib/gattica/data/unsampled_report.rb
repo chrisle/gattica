@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class UnsampledReport
+  class Data::UnsampledReport
     include Convertible
 
     attr_reader :id, :created, :updated, :title, :start_date, :end_date,

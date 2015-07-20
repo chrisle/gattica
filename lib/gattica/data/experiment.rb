@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class Experiment
+  class Data::Experiment
     include Convertible
 
     attr_reader :id, :account_id, :created, :editable_in_ga_ui, :description,

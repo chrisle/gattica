@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class Variant
+  class Data::Variant
   	include Convertible
 
     attr_reader :name, :status, :url, :weight, :won

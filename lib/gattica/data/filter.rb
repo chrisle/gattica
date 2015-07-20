@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class Filter
+  class Data::Filter
     include Convertible
 
     attr_reader :id, :created, :updated, :name, :kind, :type

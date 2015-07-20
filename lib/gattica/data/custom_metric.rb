@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class CustomMetric
+  class Data::CustomMetric
     include Convertible
 
     attr_reader :id, :name, :index, :scope, :active, :type, :min_value,

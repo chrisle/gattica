@@ -2,19 +2,17 @@ require 'rubygems'
 require 'json'
 
 module Gattica
-  class CustomDataSource
+  class Data::CustomMetric
     include Convertible
 
-    attr_reader :id, :name, :description, :type, :upload_type, :import_behavior,
-                :updated, :created
+    attr_reader :id, :name, :index, :scope, :active, :updated, :created
 
     def initialize(json)
       @id = json['id']
       @name = json['name']
-      @type = json['index']
-      @description = json['description']
-      @upload_type = json['upload_type']
-      @import_behavior = json['import_behavior']
+      @index = json['index']
+      @scope = json['scope']
+      @active = json['active']
       @updated = DateTime.parse(json['updated']) if json['updated']
       @created = DateTime.parse(json['created']) if json['created']
     end

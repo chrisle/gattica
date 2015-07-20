@@ -1,5 +1,5 @@
 module Gattica
-  class Account
+  class Data::Account
     include Convertible
 
     attr_reader :id, :updated, :title, :account_id, :account_name,
