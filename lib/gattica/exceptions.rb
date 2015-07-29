@@ -16,6 +16,7 @@ module GatticaError
   class TooManyMetrics < StandardError; end;
   class InvalidSort < StandardError; end;
   class InvalidFilter < StandardError; end;
+  class MissingData < StandardError; end;
   class MissingStartDate < StandardError; end;
   class MissingEndDate < StandardError; end;
   class MissingAccountId < StandardError; end;

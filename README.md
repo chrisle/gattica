@@ -479,6 +479,19 @@ Get access to the uploads for a custom data source ID. This works a litle differ
 This will provide you with a list of all uploads for a custom data source ID.
 
 
+Upload data for a  Custom Data Source
+-------------------------------------
+
+Upload a data file for a custom data source to make sure you can use the data.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    upload = ga.upload_data(123456, 123456, "123456", "file.csv")
+
+It will return a custom data source upload object.
+
+
 Setting HTTP timeout
 --------------------
 
@@ -562,6 +575,7 @@ Version history
 ### 1.5.7 (29 July 2015)
   * Add some more data points for various calls.
   * Add a new end point to return the uploads for a custom data source ID.
+  * Add support for uploading data files for custom data sources.
 
 ### 1.5.6 (20 July 2015)
   * Add a new end point to return the custom data sources for a web property ID.

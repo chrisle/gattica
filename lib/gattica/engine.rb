@@ -334,6 +334,28 @@ module Gattica
       return @uploads
     end
 
+    # Send the data for a custom data source.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.upload_data(123456, 'UA-123456', '123456', 'file.csv')         # Upload a data file for a custom data source
+    #
+    def upload_data(account_id, web_property_id, custom_data_source_id, data)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
+      raise GatticaError::MissingCustomDataSourceId, 'custom_data_source_id is required' if custom_data_source_id.nil?
+      raise GatticaError::MissingData, 'data is required' if data.nil?
+
+      if @upload.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_post("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDataSources/#{custom_data_source_id}/uploads?uploadType=media", data)
+        json = decompress_gzip(response)
+        @upload = json['items'].collect { |ur| Data::Upload.new(ur) }
+      end
+      return @upload
+    end
+
     # This is a convenience method if you want just 1 data point.
     #
     # == Usage
@@ -438,23 +460,17 @@ module Gattica
     def do_http_get(query_string)
       response = @http.get(add_api_key(query_string), @headers)
 
-      # Response code error checking
-      if response.code != '200'
-        case response.code
-        when '400'
-          raise GatticaError::AnalyticsError, response.body + " (status code: #{response.code})"
-        when '401'
-          raise GatticaError::InvalidToken, "Your authorization token is invalid or has expired (status code: #{response.code})"
-        when '403'
-          raise GatticaError::UserError, response.body + " (status code: #{response.code})"
-        else
-          raise GatticaError::UnknownAnalyticsError, response.body + " (status code: #{response.code})"
-        end
-      end
-
+      handle_response_code(response.body, response.code) if response.code != '200'
       return response.body
     end
 
+    def do_http_post(query_string, data)
+      return_file_content(data)
+      response = @http.post(add_api_key(query_string), data, @headers)
+
+      handle_response_code(response.body, response.code) if response.code != '200'
+      return response.body
+    end
 
     # Sets up the HTTP headers that Google expects (this is called any time @token is set either by Gattica
     # or manually by the user since the header must include the token)
@@ -476,6 +492,27 @@ module Gattica
       end
       json = JSON.parse(response)
       return json
+    end
+
+    # Open and return the content of a file
+    def return_file_content(data)
+      file = File.open(data, "rb")
+      data = file.read
+      return data
+    end
+
+    # Response code error checking
+    def handle_response_code(body, code)
+      case code
+      when '400'
+        raise GatticaError::AnalyticsError, body + " (status code: #{code})"
+      when '401'
+        raise GatticaError::InvalidToken, "Your authorization token is invalid or has expired (status code: #{code})"
+      when '403'
+        raise GatticaError::UserError, body + " (status code: #{code})"
+      else
+        raise GatticaError::UnknownAnalyticsError, body + " (status code: #{code})"
+      end
     end
 
     # Creates a valid query string for GA
