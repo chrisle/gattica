@@ -6,10 +6,12 @@ module Gattica
     include Convertible
 
     attr_reader :id, :name, :index, :scope, :active, :type, :min_value,
-                :max_value, :updated, :created
+                :max_value, :updated, :created, :account_id, :web_property_id
 
     def initialize(json)
       @id = json['id']
+      @account_id = json['accountId']
+      @web_property_id = json['webPropertyId']
       @name = json['name']
       @index = json['index']
       @scope = json['scope']

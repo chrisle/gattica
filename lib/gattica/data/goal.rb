@@ -5,7 +5,7 @@ module Gattica
   class Data::Goal
     include Convertible
 
-    attr_reader :id, :updated, :title, :account_id, :account_name,
+    attr_reader :id, :updated, :name, :account_id, :account_name,
                 :profile_id, :web_property_id, :goals, :active, :type,
                 :created, :updated, :value
 
@@ -14,7 +14,7 @@ module Gattica
       @updated = DateTime.parse(json['updated'])
       @account_id = find_account_id(json)
 
-      @title = json['name']
+      @name = json['name']
       @profile_id = json['id']
       @web_property_id = json['webPropertyId']
       @active = json['active']

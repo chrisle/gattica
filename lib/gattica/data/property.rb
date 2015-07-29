@@ -6,10 +6,13 @@ module Gattica
     include Convertible
 
     attr_reader :id, :kind, :created, :updated, :industry_vertical,
-                :level, :name, :profile_count
+                :level, :name, :profile_count, :account_id, :web_property_id
 
     def initialize(json)
       @id = json['id']
+      @account_id = json['accountId']
+      @web_property_id = json['internalWebPropertyId']
+      @default_profile_id = json['defaultProfileId']
       @kind = json['kind']
       @created = DateTime.parse(json['created'])
       @updated = DateTime.parse(json['updated'])

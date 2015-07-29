@@ -5,14 +5,14 @@ module Gattica
   class Data::Filter
     include Convertible
 
-    attr_reader :id, :created, :updated, :name, :kind, :type
+    attr_reader :id, :account_id, :created, :updated, :name, :type
 
     def initialize(json)
       @id = json['id']
+      @account_id = json['accountId']
       @name = json['name']
       @created = DateTime.parse(json['created'])
       @updated = DateTime.parse(json['updated'])
-      @kind = json['kind']
       @type = json['type']
     end
 
