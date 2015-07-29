@@ -20,6 +20,7 @@ require 'gattica/data_set'
 require 'gattica/meta_data'
 require 'gattica/exceptions'
 require 'gattica/data/account'
+require 'gattica/data/upload'
 require 'gattica/data/segment'
 require 'gattica/data/experiment'
 require 'gattica/data/variant'
@@ -36,7 +37,7 @@ require 'gattica/data/unsampled_report'
 # Please see the README for usage docs.
 module Gattica
 
-  VERSION = '1.5.6'
+  VERSION = '1.5.7'
 
   # Creates a new instance of Gattica::Engine
   def self.new(*args)

@@ -21,6 +21,7 @@ module GatticaError
   class MissingAccountId < StandardError; end;
   class MissingWebPropertyId < StandardError; end;
   class MissingProfileId < StandardError; end;
+  class MissingCustomDataSourceId < StandardError; end;
 
   # Errors from Analytics
   class AnalyticsError < StandardError; end;

@@ -466,6 +466,19 @@ Get access to the properties of a specific account ID.
 This will provide you with a list of all properties or profiles in the account.
 
 
+Uploads of Custom Data Sources
+------------------------------
+
+Get access to the uploads for a custom data source ID. This works a litle different as you also have to provide the account id + web property ID + custom data source ID.
+
+    ga = Gattica.new({
+        token: 'oauth2_token'
+    })
+    uploads = ga.uploads(123456, 123456, "123456")
+
+This will provide you with a list of all uploads for a custom data source ID.
+
+
 Setting HTTP timeout
 --------------------
 
@@ -546,6 +559,10 @@ History
 
 Version history
 ---------------
+### 1.5.7 (29 July 2015)
+  * Add some more data points for various calls.
+  * Add a new end point to return the uploads for a custom data source ID.
+
 ### 1.5.6 (20 July 2015)
   * Add a new end point to return the custom data sources for a web property ID.
   * Add a new end point to return the unsampled reports for a profile ID.

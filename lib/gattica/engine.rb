@@ -312,6 +312,28 @@ module Gattica
       return @unsampled_reports
     end
 
+    # Returns the list of uploads for a custom data source available to the authenticated user for
+    # a specific custom data source.
+    #
+    # == Usage
+    #   ga = Gattica.new({token: 'oauth2_token'})
+    #   ga.uploads(123456, 'UA-123456', '123456')         # Look up custom data source uploads
+    #
+    def uploads(account_id, web_property_id, custom_data_source_id)
+
+      raise GatticaError::MissingAccountId, 'account_id is required' if account_id.nil?
+      raise GatticaError::MissingWebPropertyId, 'web_property_id is required' if web_property_id.nil?
+      raise GatticaError::MissingCustomDataSourceId, 'custom_data_source_id is required' if custom_data_source_id.nil?
+
+      if @uploads.nil?
+        create_http_connection('www.googleapis.com')
+        response = do_http_get("/analytics/v3/management/accounts/#{account_id}/webproperties/#{web_property_id}/customDataSources/#{custom_data_source_id}/uploads")
+        json = decompress_gzip(response)
+        @uploads = json['items'].collect { |ur| Data::Upload.new(ur) }
+      end
+      return @uploads
+    end
+
     # This is a convenience method if you want just 1 data point.
     #
     # == Usage
