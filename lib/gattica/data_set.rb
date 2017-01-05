@@ -21,7 +21,7 @@ module Gattica
     #
     # == Parameters:
     # +format=:long+::    Adds id, updated, title to output columns
-    def to_csv(format=:short)
+    def to_csv(format=:short, precision=nil)
       output = ''
       columns = []
       case format
@@ -30,11 +30,11 @@ module Gattica
       end
       unless @points.empty?   # if there was at least one result
         @points.first.dimensions.map {|d| d.keys.first}.each { |c| columns << c }
-        @points.first.metrics.map {|m| m.keys.first}.each { |c| columns << c }
+        @points.first.metrics.map {|m| m.keys.first}.each { |c| columns << (precision.nil? || c.class != Numeric ? c : (precision % c)) }
       end
       output = CSV.generate_line(columns) 
       @points.each do |point|
-        output += point.to_csv(format)
+        output += point.to_csv(format, precision)
       end
        output
     end
